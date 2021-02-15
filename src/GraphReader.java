@@ -29,6 +29,7 @@ public class GraphReader {
                 splitted = temp.split(",");
                 nodes.add(new Node(Integer.parseInt(splitted[0]), splitted[1], splitted[2].equals("INTEREST")));
             }
+            sort(nodes,0,nodes.size()-1);
             numEdge = reader.nextInt();
             reader.nextLine();
             for (int i = 0; i < numEdge; i++) {
@@ -44,8 +45,40 @@ public class GraphReader {
 
     }
 
-    private ArrayList<Node> sort(ArrayList<Node> nodes){
+    //QuickSort implementation for the nodes
+    private int partition(ArrayList<Node> nodes, int low, int high) {
+        Node pivot = nodes.get(high); //Pivot element
+        int i = (low-1); // index of smaller element
+        for (int j=low; j<high; j++) {
 
-        return nodes;
+            // =====================================================
+            // Sort by Id ascending order
+            // =====================================================
+
+            //If node(j) lower than pivot swap nodes(i) and nodes(j)
+            if (nodes.get(j).getId() < pivot.getId()) {
+                i++;
+                Node temp = nodes.get(i);
+                nodes.set(i, nodes.get(j));
+                nodes.set(j, temp);
+            }
+        }
+        // swap nodes(i+1) and nodes(high) (or pivot)
+        Node temp = nodes.get(i+1);
+        nodes.set(i+1, nodes.get(high));
+        nodes.set(high, temp);
+
+        return i+1;
     }
+
+    private void sort(ArrayList<Node> nodes, int low, int high) {
+        if (low < high) {
+
+            int partindex = partition(nodes, low, high);
+
+            sort(nodes, low, partindex-1);
+            sort(nodes, partindex+1, high);
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 public class Node {
-    private int id;
+
+    public int id;
     private String name;
     private boolean safe;
 
@@ -13,5 +14,16 @@ public class Node {
         this.id = id;
         this.name = name;
         this.safe = safe;
+    }
+
+    //Public Getters
+    public int getId(){
+        return id;
+    }
+    public String getName(){
+        return name;
+    }
+    public boolean getSafe(){
+        return safe;
     }
 }
