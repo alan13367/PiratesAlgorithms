@@ -16,13 +16,24 @@ public class Node {
         this.safe = safe;
     }
 
-    //Public Getters
+    /**
+     * The Id Getter
+     * @return return of the node's Id
+     */
     public int getId(){
         return id;
     }
+    /**
+     * The Name Getter
+     * @return return of the node's Name
+     */
     public String getName(){
         return name;
     }
+    /**
+     * The Safe Getter
+     * @return return whether if it's safe or not
+     */
     public boolean getSafe(){
         return safe;
     }

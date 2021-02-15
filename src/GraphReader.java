@@ -45,7 +45,14 @@ public class GraphReader {
 
     }
 
-    //QuickSort implementation for the nodes
+    /**
+     * A method which takes the nodes and checks whether its higher or lower than the comparing pivot and orders the
+     * nodes based on it.
+     * @param nodes array list of the nodes gotten from the file
+     * @param low lowest index of nodes
+     * @param high highest index of nodes
+     * @return integer refering to the index of the partition
+     */
     private int partition(ArrayList<Node> nodes, int low, int high) {
         Node pivot = nodes.get(high); //Pivot element
         int i = (low-1); // index of smaller element
@@ -71,6 +78,13 @@ public class GraphReader {
         return i+1;
     }
 
+
+    /**
+     *  A method that recursively calls itself in order to sort the entire nodes arraylist.
+     * @param nodes array list of the nodes gotten from the file
+     * @param low lowest index of nodes
+     * @param high highest index of nodes
+     */
     private void sort(ArrayList<Node> nodes, int low, int high) {
         if (low < high) {
 
