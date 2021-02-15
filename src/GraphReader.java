@@ -43,4 +43,9 @@ public class GraphReader {
         return new Graph(nodes, edges);
 
     }
+
+    private ArrayList<Node> sort(ArrayList<Node> nodes){
+
+        return nodes;
+    }
 }
