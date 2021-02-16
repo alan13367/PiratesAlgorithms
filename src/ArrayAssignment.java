@@ -1,7 +1,11 @@
 import java.util.ArrayList;
 
 public class ArrayAssignment {
-
+    /**
+     * Returns an array to be able to know what id each node has in the matrix
+     * @param nodes array list of the nodes that must be indexed
+     * @return an array of indexes of each node
+     */
     public int[] newIdAssigner(ArrayList<Node> nodes) {
         int i;
         int j = 0;
