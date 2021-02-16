@@ -8,34 +8,16 @@ public class ArrayAssignment {
      * @return an array of indexes of each node
      */
     public int[] newIdAssigner(ArrayList<Node> nodes) {
-        int i;
-        int j = 0;
-        int numId = 0;
 
-        //We check what is the highest ID number to generate an array that depends on the highest ID number.
-        for(i = 0; i < nodes.size(); i++) {
-            if (nodes.get(i).getId() > numId) {
-                numId = nodes.get(i).getId();
-            }
-        }
+        //We create an array that is twice as big as the amount of nodes there are.
+        int[] newIdArray = new int[nodes.size() * 2];
 
-        int[] newIdArray = new int[numId];
-        int[] tempArray = new int[numId];
+        //We fill it with -1, so that we can change the necessary ones later.
+        Arrays.fill(newIdArray, -1);
 
-        //We generate a temporary array to compare with the node ID array
-        for(i = 0; i < numId; i++) {
-            tempArray[i] = i;
-        }
-
-        //We compare the temporary array with the node ID array and we generate the new ID array.
-        for(i = 0; i < numId; i++) {
-            if(nodes.get(j).getId() == tempArray[i]) {
-                newIdArray[i] = j;
-                j++;
-            }
-            else {
-                newIdArray[i] = -1;
-            }
+        //We fill the new array with the corresponding node.
+        for(int i = 0; i < nodes.size(); i++) {
+            newIdArray[nodes.get(i).getId()] = i;
         }
         return newIdArray;
     }
