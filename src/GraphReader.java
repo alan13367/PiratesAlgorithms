@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class GraphReader {
@@ -13,11 +14,12 @@ public class GraphReader {
      */
     public Graph reader(String path){
         ArrayList<Node> nodes = new ArrayList<>();
-        ArrayList<Edge> edges = new ArrayList<>();
+        Graph graph;
         int numNode = 0;
         int numEdge = 0;
         String temp;
         String[] splitted;
+        float[][] mtx;
 
         try{
             File file = new File(basePath + path);
@@ -29,19 +31,30 @@ public class GraphReader {
                 splitted = temp.split(",");
                 nodes.add(new Node(Integer.parseInt(splitted[0]), splitted[1], splitted[2].equals("INTEREST")));
             }
+
             sort(nodes,0,nodes.size()-1);
+            graph = new Graph(nodes, new ArrayAssignment().newIdAssigner(nodes));
+
+            mtx = new float[numNode][numNode];
+            for(float[] row : mtx){
+                Arrays.fill(row, -1.0f);
+            }
+
             numEdge = reader.nextInt();
             reader.nextLine();
             for (int i = 0; i < numEdge; i++) {
                 temp = reader.nextLine();
                 splitted = temp.split(",");
-                edges.add(new Edge(Integer.parseInt(splitted[0]), Integer.parseInt(splitted[1]), Float.parseFloat(splitted[2])));
+                Edge edge = new Edge(Integer.parseInt(splitted[0]), Integer.parseInt(splitted[1]), Float.parseFloat(splitted[2]));
+                mtx[graph.getIndex(edge.getFrom())][graph.getIndex(edge.getTo())] = edge.getCost();
             }
+            graph.setaMatrix(mtx);
+            return graph;
         }catch (FileNotFoundException e){
             System.out.println("File not found");
             e.printStackTrace();
         }
-        return new Graph(nodes, edges);
+        return null;
 
     }
 

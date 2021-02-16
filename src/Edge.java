@@ -15,4 +15,28 @@ public class Edge {
         this.to = to;
         this.cost = cost;
     }
+
+    /**
+     * Getter for the started node
+     * @return the id of the starting node
+     */
+    public int getFrom() {
+        return from;
+    }
+
+    /**
+     * Getter for the destination node
+     * @return the id of the destination node
+     */
+    public int getTo() {
+        return to;
+    }
+
+    /**
+     * Getter for the cost of the edge
+     * @return the float of the cost of the edge
+     */
+    public float getCost() {
+        return cost;
+    }
 }
