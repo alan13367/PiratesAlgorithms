@@ -13,4 +13,12 @@ public class Graph {
         this.nodes = nodes;
         this.edges = edges;
     }
+
+    /**
+     * Getter of the nodes
+     * @return returns the nodes of the graph.
+     */
+    public ArrayList<Node> getNodes() {
+        return nodes;
+    }
 }
