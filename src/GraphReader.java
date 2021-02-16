@@ -47,7 +47,9 @@ public class GraphReader {
                 splitted = temp.split(",");
                 Edge edge = new Edge(Integer.parseInt(splitted[0]), Integer.parseInt(splitted[1]), Float.parseFloat(splitted[2]));
                 mtx[graph.getIndex(edge.getFrom())][graph.getIndex(edge.getTo())] = edge.getCost();
+                mtx[graph.getIndex(edge.getTo())][graph.getIndex(edge.getFrom())] = edge.getCost();
             }
+
             graph.setaMatrix(mtx);
             return graph;
         }catch (FileNotFoundException e){

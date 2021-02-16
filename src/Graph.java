@@ -39,4 +39,14 @@ public class Graph {
     public void setaMatrix(float[][] aMatrix) {
         this.aMatrix = aMatrix;
     }
+
+    /**
+     * Getter to get the cost of an edge between two nodes
+     * @param from the id of the starting node
+     * @param to the id of the destination node
+     * @return the cost to go between the nodes
+     */
+    public float getCost(int from, int to){
+        return aMatrix[from][to];
+    }
 }
