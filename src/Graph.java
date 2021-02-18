@@ -49,4 +49,20 @@ public class Graph {
     public float getCost(int from, int to){
         return aMatrix[getIndex(from)][getIndex(to)];
     }
+
+    /**
+     * Finds all nodes connected to specified id
+     * @param id the id to center the search from
+     * @return an array list of all the neighbours
+     */
+    public ArrayList<Node> getNeighbours(int id){
+        int index = getIndex(id);
+        ArrayList<Node> out = new ArrayList<>();
+        for (int i = 0; i < nodes.size(); i++) {
+            if(aMatrix[index][i] != 0.0f){
+                out.add(nodes.get(i));
+            }
+        }
+        return out;
+    }
 }
