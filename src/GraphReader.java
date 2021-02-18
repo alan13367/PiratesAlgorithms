@@ -37,7 +37,7 @@ public class GraphReader {
 
             mtx = new float[numNode][numNode];
             for(float[] row : mtx){
-                Arrays.fill(row, -1.0f);
+                Arrays.fill(row, 0.0f);
             }
 
             numEdge = reader.nextInt();
