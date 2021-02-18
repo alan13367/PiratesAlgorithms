@@ -47,6 +47,6 @@ public class Graph {
      * @return the cost to go between the nodes
      */
     public float getCost(int from, int to){
-        return aMatrix[from][to];
+        return aMatrix[getIndex(from)][getIndex(to)];
     }
 }
