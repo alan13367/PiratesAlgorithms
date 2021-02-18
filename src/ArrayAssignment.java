@@ -13,7 +13,7 @@ public class ArrayAssignment {
         int[] newIdArray = new int[nodes.size() * 2];
 
         //We fill it with -1, so that we can change the necessary ones later.
-        Arrays.fill(newIdArray, -1);
+        Arrays.fill(newIdArray, 0);
 
         //We fill the new array with the corresponding node.
         for(int i = 0; i < nodes.size(); i++) {
