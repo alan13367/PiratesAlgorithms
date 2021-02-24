@@ -17,6 +17,9 @@ public class BFSAlgorithm {
         visited[index] = true;
         while (queue.size() != 0) {
             node = queue.poll();
+            if(!graph.getNodes().get(index).getSafe()){
+                System.out.println("Id: " + node + " Name: " + graph.getNodes().get(index).getName());
+            }
             for(int i = 0; i < graph.getNeighbours(node).size(); i++) {
                 if(!visited[graph.getIndex(graph.getNeighbours(node).get(i).getId())]) {
                     int j = graph.getNeighbours(node).get(i).getId();
