@@ -12,7 +12,7 @@ public class GraphReader {
      * @param path the name of the file to read.
      * @return a graph class holding two lists, one of all the nodes and one for all the edges.
      */
-    public Graph reader(String path){
+    public Graph reader(String path) throws FileNotFoundException {
         ArrayList<Node> nodes = new ArrayList<>();
         Graph graph;
         int numNode = 0;
@@ -21,43 +21,36 @@ public class GraphReader {
         String[] splitted;
         float[][] mtx;
 
-        try{
-            File file = new File(basePath + path);
-            Scanner reader = new Scanner(file);
-            numNode = reader.nextInt();
-            reader.nextLine();
-            for (int i = 0; i < numNode; i++) {
-                temp = reader.nextLine();
-                splitted = temp.split(",");
-                nodes.add(new Node(Integer.parseInt(splitted[0]), splitted[1], splitted[2].equals("INTEREST")));
-            }
-
-            sort(nodes,0,nodes.size()-1);
-            graph = new Graph(nodes, new ArrayAssignment().newIdAssigner(nodes));
-
-            mtx = new float[numNode][numNode];
-            for(float[] row : mtx){
-                Arrays.fill(row, 0.0f);
-            }
-
-            numEdge = reader.nextInt();
-            reader.nextLine();
-            for (int i = 0; i < numEdge; i++) {
-                temp = reader.nextLine();
-                splitted = temp.split(",");
-                Edge edge = new Edge(Integer.parseInt(splitted[0]), Integer.parseInt(splitted[1]), Float.parseFloat(splitted[2]));
-                mtx[graph.getIndex(edge.getFrom())][graph.getIndex(edge.getTo())] = edge.getCost();
-                mtx[graph.getIndex(edge.getTo())][graph.getIndex(edge.getFrom())] = edge.getCost();
-            }
-
-            graph.setaMatrix(mtx);
-            return graph;
-        }catch (FileNotFoundException e){
-            System.out.println("File not found");
-            e.printStackTrace();
+        File file = new File(basePath + path);
+        Scanner reader = new Scanner(file);
+        numNode = reader.nextInt();
+        reader.nextLine();
+        for (int i = 0; i < numNode; i++) {
+            temp = reader.nextLine();
+            splitted = temp.split(",");
+            nodes.add(new Node(Integer.parseInt(splitted[0]), splitted[1], splitted[2].equals("INTEREST")));
         }
-        return null;
 
+        sort(nodes,0,nodes.size()-1);
+        graph = new Graph(nodes, new ArrayAssignment().newIdAssigner(nodes));
+
+        mtx = new float[numNode][numNode];
+        for(float[] row : mtx){
+            Arrays.fill(row, 0.0f);
+        }
+
+        numEdge = reader.nextInt();
+        reader.nextLine();
+        for (int i = 0; i < numEdge; i++) {
+            temp = reader.nextLine();
+            splitted = temp.split(",");
+            Edge edge = new Edge(Integer.parseInt(splitted[0]), Integer.parseInt(splitted[1]), Float.parseFloat(splitted[2]));
+            mtx[graph.getIndex(edge.getFrom())][graph.getIndex(edge.getTo())] = edge.getCost();
+            mtx[graph.getIndex(edge.getTo())][graph.getIndex(edge.getFrom())] = edge.getCost();
+        }
+
+        graph.setaMatrix(mtx);
+        return graph;
     }
 
     /**

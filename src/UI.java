@@ -1,14 +1,62 @@
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class UI {
-    public UI() {}
+    private Graph graph;
     /**
      * UI starting message
      */
     public void ui () {
         //Output the starting message "-= Pirates of the Mediterranean =-".
         System.out.println("-= ☠ Pirates of the Mediterranean ☠ =-");
+        this.dataset();
+    }
+
+    /**
+     * Choose a dataset:
+     * L) graphL.paed
+     * M) graphM.paed
+     * S) graphS.paed
+     * XL) graphXL.paed
+     * XS) graphXS.paed
+     * XXL) graphXXL.paed
+     * XXS) graphXXS.paed
+     */
+    public void dataset () {
+        GraphReader graphReader = new GraphReader();
+        Scanner scanner = new Scanner(System.in);
+        String dataset;
+        //Leave an empty line.
+        System.out.println();
+        System.out.println("L) graphL.paed");
+        System.out.println("M) graphM.paed");
+        System.out.println("S) graphS.paed");
+        System.out.println("XL) graphXL.paed");
+        System.out.println("XS) graphXS.paed");
+        System.out.println("XXL) graphXXL.paed");
+        System.out.println("XXS) graphXXS.paed");
+        //Leave an empty line.
+        System.out.println();
+        //Show a message saying "Choose an option: ".
+        System.out.print("Choose a dataset: ");
+        try {
+            //Get the dataset selected.
+            dataset = scanner.nextLine();
+            //If the dataset selected is...
+            this.graph = graphReader.reader("graph"+ dataset.toUpperCase() +".paed");
+        }
+        catch (InputMismatchException e) {
+            //... not a string, then we output an error message "ERROR: Input mismatch, a string is required."
+            System.out.println("ERROR: Input mismatch, a string is required.");
+            //... and we show the starting menu again
+            this.dataset();
+        }
+        catch (FileNotFoundException e) {
+            //... not a correct file, then we output an error message "ERROR: File not found, please enter a valid dataset."
+            System.out.println("ERROR: File not found, please enter a valid dataset.");
+            //... and we show the starting menu again
+            this.dataset();
+        }
         //Call the starting menu.
         this.startMenu();
     }
@@ -52,6 +100,7 @@ public class UI {
                 case 1:
                     //... 1, then we give the user a menu to manage maritime routes.
                     this.routesMenu();
+                    break;
                 case 2:
                     //TODO: 2. Inventory (Binary trees)
                 case 3:
@@ -177,16 +226,44 @@ public class UI {
      * Deep waters
      */
     public void findDangerousPlaces () {
+        BFS bfs = new BFS();
         Scanner scanner =  new Scanner(System.in);  //Scanner to get the user input through the System input.
         int originNodeId = 0;                       //integer to store an identification from the origin node
+        int i;
+        boolean found = false;
+        LinkedList<String> result = new LinkedList<>();
+        ArrayList<Node> nodes = this.graph.getNodes();
         //Show a message saying "Enter the origin node's identifier: ".
         System.out.println("Enter the origin node's identifier: ");
         //Store the user input inside originNodeId
-        originNodeId = scanner.nextInt();
-        //TODO: Find if the given node identifier existsç
-        //Show a message saying "BFS found the following dangerous places: ".
-        System.out.println("BFS found the following dangerous places: ");
-        //TODO: BFS and posterior printing
+        //Try to scan the user input looking for an integer...
+        try {
+            originNodeId = scanner.nextInt();
+            //... if that is not the case, we catch the exception.
+        } catch (InputMismatchException e) {
+            //... not an integer, then we output an error message "ERROR: Input mismatch, an integer is required."
+            System.out.println("ERROR: Input mismatch, an integer is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the find dangerous places menu again
+            this.findDangerousPlaces();
+        }
+        for (i = 0; i < nodes.size() && !found; i++) {
+            if (nodes.get(i).getId() == originNodeId) {
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("ERROR: Please enter a node identifier that exists.");
+            this.findDangerousPlaces();
+        } else {
+            //Show a message saying "BFS found the following dangerous places: ".
+            System.out.println("BFS found the following dangerous places: ");
+            result = bfs.bfsAlgorithm(this.graph, originNodeId);
+            for (String name : result) {
+                System.out.println(name);
+            }
+        }
     }
 
     /**
