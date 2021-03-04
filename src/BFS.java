@@ -17,7 +17,7 @@ public class BFS {
         while (queue.size() != 0) {
             nodeID = queue.poll();
             if(!graph.getNodes().get(graph.getIndex(nodeID)).getSafe()) {
-                result.add(graph.getNodes().get(graph.getIndex(nodeID)).getName() + graph.getNodes().get(graph.getIndex(nodeID)).getSafe());
+                result.add(graph.getNodes().get(graph.getIndex(nodeID)).getName()); //for testing:  + graph.getNodes().get(graph.getIndex(nodeID)).getSafe()
             }
             for(Node neighbour: graph.getNeighbours(nodeID)) {
                 if(!visited[graph.getIndex(neighbour.getId())]) {
