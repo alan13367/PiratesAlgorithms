@@ -1,6 +1,6 @@
 public class Node {
 
-    public int id;
+    private int id;
     private String name;
     private boolean safe;
 
