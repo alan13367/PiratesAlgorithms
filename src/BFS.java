@@ -12,7 +12,6 @@ public class BFS {
         LinkedList<String> result = new LinkedList<>();
         LinkedList<Integer> queue = new LinkedList<>();
 
-
         queue.add(nodeID);
         visited[graph.getIndex(nodeID)] = true;
         while (queue.size() != 0) {
@@ -21,7 +20,7 @@ public class BFS {
                 result.add(graph.getNodes().get(graph.getIndex(nodeID)).getName() + graph.getNodes().get(graph.getIndex(nodeID)).getSafe());
             }
             for(Node neighbour: graph.getNeighbours(nodeID)) {
-                if(!visited[graph.getIndex(neighbour.getId())] && !neighbour.getSafe()) {
+                if(!visited[graph.getIndex(neighbour.getId())]) {
                     queue.add(neighbour.getId());
                     visited[graph.getIndex(neighbour.getId())] = true;
                 }
