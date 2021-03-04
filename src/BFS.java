@@ -12,16 +12,16 @@ public class BFS {
         LinkedList<String> result = new LinkedList<>();
         LinkedList<Integer> queue = new LinkedList<>();
 
-        int index = graph.getIndex(nodeID);
-        queue.add(index);
-        visited[index] = true;
+
+        queue.add(nodeID);
+        visited[graph.getIndex(nodeID)] = true;
         while (queue.size() != 0) {
-            index = queue.poll();
-            if(!graph.getNodes().get(index).getSafe()) {
-                result.add(graph.getNodes().get(index).getName());
+            nodeID = queue.poll();
+            if(!graph.getNodes().get(graph.getIndex(nodeID)).getSafe()) {
+                result.add(graph.getNodes().get(graph.getIndex(nodeID)).getName() + graph.getNodes().get(graph.getIndex(nodeID)).getSafe());
             }
-            for(Node neighbour: graph.getNeighbours(index)) {
-                if(!visited[graph.getIndex(neighbour.getId())]) {
+            for(Node neighbour: graph.getNeighbours(nodeID)) {
+                if(!visited[graph.getIndex(neighbour.getId())] && !neighbour.getSafe()) {
                     queue.add(neighbour.getId());
                     visited[graph.getIndex(neighbour.getId())] = true;
                 }
