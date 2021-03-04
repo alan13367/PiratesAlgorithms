@@ -65,9 +65,18 @@ public class Graph {
         }
         return out;
     }
-
-
-
-
-
+    /**
+     * Check if a given node exists in a graph by looking at its ID
+     * @param originNodeId the id that represents the node we are looking for
+     * @return a boolean to know if the node exists or not inside our graph
+     */
+    public boolean ifNodeExists (int originNodeId) {
+        boolean found = false;
+        for (int i = 0; i < nodes.size() && !found; i++) {
+            if (nodes.get(i).getId() == originNodeId) {
+                found = true;
+            }
+        }
+        return found;
+    }
 }

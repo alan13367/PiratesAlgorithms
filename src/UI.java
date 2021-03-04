@@ -103,13 +103,17 @@ public class UI {
                     break;
                 case 2:
                     //TODO: 2. Inventory (Binary trees)
+                    break;
                 case 3:
                     //TODO: 3. Deck (R trees)
+                    break;
                 case 4:
                     //TODO: 4. Crew (Tables)
+                    break;
                 case 5:
                     System.out.println("So long, comrade!");
                     //... 5, then we output a farewell message and exit the program.
+                    System.exit(0);
                     break;
                 default:
                     //... not an integer value between 1 and 5, then we output an error message "ERROR: Option must be
@@ -119,6 +123,7 @@ public class UI {
                     System.out.println();
                     //... and we show the starting menu again
                     this.startMenu();
+                    break;
             }
         }
         //... if that is not the case, we catch the exception.
@@ -160,7 +165,7 @@ public class UI {
         //Leave an empty line.
         System.out.println();
         //Show a message saying "What functionality do you want to run? ".
-        System.out.println("What functionality do you want to run? ");
+        System.out.print("What functionality do you want to run? ");
         //Try to scan the user input looking for a character...
         try {
             //Get the character selected and transform it to uppercase given a String.
@@ -170,18 +175,23 @@ public class UI {
                 case 'A':
                     //... A, then we give the user a menu to find points of interest.
                     this.findPointsOfInterest();
+                    break;
                 case 'B':
                     //... B, then we give the user a menu to find dangerous places.
                     this.findDangerousPlaces();
+                    break;
                 case 'C':
                     //... C, then we show the user the universal nautical chart.
                     this.showUniversalNauticalChart();
+                    break;
                 case 'D':
                     //... D, then we give the user a menu to find the optimal route.
                     this.findOptimalRoute();
+                    break;
                 case 'E':
                     //... E, then we go back to the starting menu.
                     this.startMenu();
+                    break;
                 default:
                     //... not a character value between A and E, then we output an error message "ERROR: Functionality
                     //must be a character value (A-E)"
@@ -190,6 +200,7 @@ public class UI {
                     System.out.println();
                     //... and we show the routes menu again
                     this.routesMenu();
+                    break;
             }
         //... if that is not the case, we catch the exception.
         } catch (InputMismatchException e) {
@@ -207,18 +218,46 @@ public class UI {
      * Treasure trove
      */
     public void findPointsOfInterest () {
+        DFS dfs = new DFS();                        //DFS algorithm to find all the points of interests
         Scanner scanner = new Scanner(System.in);   //Scanner to get the user input through the System input.
-        int originNodeId;                           //integer to store an identification from the origin node
+        int originNodeId = 0;                       //integer to store an identification from the origin node
+        ArrayList<Node> result;                     //Array list to store the nodes that compound the result
         //Show a message saying "Enter the origin node's identifier: ".
-        System.out.println("Enter the origin node's identifier: ");
+        System.out.print("Enter the origin node's identifier: ");
         //Store the user input inside originNodeId
-        originNodeId = scanner.nextInt();
-        //TODO: Find if the given node identifier exists
-        //Show a message saying "DFS found the following points of interest: ".
-        System.out.println("DFS found the following points of interest: ");
-        //Leave an empty line.
-        System.out.println();
-        //TODO: DFS and posterior printing
+        try {
+            originNodeId = scanner.nextInt();
+            //... if that is not the case, we catch the exception.
+        } catch (InputMismatchException e) {
+            //... not an integer, then we output an error message "ERROR: Input mismatch, an integer is required."
+            System.out.println("ERROR: Input mismatch, an integer is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the find dangerous places menu again
+            this.findPointsOfInterest();
+        }
+        //Check if the originNodeId corresponds to a Node
+        if (!graph.ifNodeExists(originNodeId)) {
+            //...if the node does not exist then...
+            //...show an error message saying ""ERROR: Please enter a node identifier that exists."...
+            System.out.println("ERROR: Please enter a node identifier that exists.");
+            //...and call again the find points of interest menu
+            this.findPointsOfInterest();
+        } else {
+            //...if the node does exist then...
+            //Show a message saying "DFS found the following points of interest: ".
+            System.out.println("DFS found the following points of interest: ");
+            //Leave an empty line.
+            System.out.println();
+            //call the DFS algorithm to get the result...
+            result = dfs.dfsAlgorithm(originNodeId, this.graph);
+            //... and for each node we output its name
+            for (Node node : result) {
+                System.out.println(node.getName());
+            }
+            //Go back to the routes menu
+            this.routesMenu();
+        }
     }
     /**
      * Show dangerous places to the user using BFS, f.e.:
@@ -226,15 +265,12 @@ public class UI {
      * Deep waters
      */
     public void findDangerousPlaces () {
-        BFS bfs = new BFS();
+        BFS bfs = new BFS();                        //BFS algorithm to find all the dangerous places.
         Scanner scanner =  new Scanner(System.in);  //Scanner to get the user input through the System input.
-        int originNodeId = 0;                       //integer to store an identification from the origin node
-        int i;
-        boolean found = false;
-        LinkedList<String> result = new LinkedList<>();
-        ArrayList<Node> nodes = this.graph.getNodes();
+        int originNodeId = 0;                       //integer to store an identification from the origin node.
+        LinkedList<String> result;                  //Linked list to store the strings that compound the result.
         //Show a message saying "Enter the origin node's identifier: ".
-        System.out.println("Enter the origin node's identifier: ");
+        System.out.print("Enter the origin node's identifier: ");
         //Store the user input inside originNodeId
         //Try to scan the user input looking for an integer...
         try {
@@ -248,21 +284,27 @@ public class UI {
             //... and we show the find dangerous places menu again
             this.findDangerousPlaces();
         }
-        for (i = 0; i < nodes.size() && !found; i++) {
-            if (nodes.get(i).getId() == originNodeId) {
-                found = true;
-            }
-        }
-        if (!found) {
+        //Check if the originNodeId corresponds to a Node
+        if (!graph.ifNodeExists(originNodeId)) {
+            //...if the node does not exist then...
+            //...show an error message saying ""ERROR: Please enter a node identifier that exists."...
             System.out.println("ERROR: Please enter a node identifier that exists.");
+            //...and call again the find dangerous places menu
             this.findDangerousPlaces();
         } else {
+            //...if the node does exist then...
             //Show a message saying "BFS found the following dangerous places: ".
             System.out.println("BFS found the following dangerous places: ");
+            //Leave an empty line.
+            System.out.println();
+            //call the BFS algorithm to get the result...
             result = bfs.bfsAlgorithm(this.graph, originNodeId);
+            //... and for each node we output its name
             for (String name : result) {
                 System.out.println(name);
             }
+            //Go back to the routes menu
+            this.routesMenu();
         }
     }
 
@@ -272,6 +314,8 @@ public class UI {
     public void showUniversalNauticalChart () {
         //Show a message saying "Finding the MST...".
         System.out.println("Finding the MST...");
+        //Leave an empty line.
+        System.out.println();
         //TODO: find the MST
     }
 
@@ -285,18 +329,54 @@ public class UI {
         //Show a message saying "Enter the origin node's identifier: ".
         System.out.println("Enter the origin node's identifier: ");
         //Store the user input inside originNodeId
-        originNodeId = scanner.nextInt();
-        //TODO: Handle missmatching
-        //Show a message saying "Enter the destination node's identifier: ".
-        System.out.println("Enter the destination node's identifier: ");
-        //Store the user input inside destinationNodeId
-        destinationNodeId = scanner.nextInt();
-        //TODO: Handle missmatching
-        //Leave an empty line.
-        System.out.println();
-        //Show a message saying "Finding the optimal route...".
-        System.out.println("Finding the optimal route...");
-        //TODO: Find the optimal route
+        try {
+            originNodeId = scanner.nextInt();
+            //... if that is not the case, we catch the exception.
+        } catch (InputMismatchException e) {
+            //... not an integer, then we output an error message "ERROR: Input mismatch, an integer is required."
+            System.out.println("ERROR: Input mismatch, an integer is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the find optimal route menu
+            this.findOptimalRoute();
+        }
+        //Check if the originNodeId corresponds to a Node
+        if (!graph.ifNodeExists(originNodeId)) {
+            //...if the node does not exist then...
+            //...show an error message saying "ERROR: Please enter a node identifier that exists."...
+            System.out.println("ERROR: Please enter a node identifier that exists.");
+            //...and call again the find optimal route menu
+            this.findOptimalRoute();
+        } else {
+            //Show a message saying "Enter the destination node's identifier: ".
+            System.out.println("Enter the destination node's identifier: ");
+            //Store the user input inside destinationNodeId
+            try {
+                destinationNodeId = scanner.nextInt();
+                //... if that is not the case, we catch the exception.
+            } catch (InputMismatchException e) {
+                //... not an integer, then we output an error message "ERROR: Input mismatch, an integer is required."
+                System.out.println("ERROR: Input mismatch, an integer is required.");
+                //Leave an empty line.
+                System.out.println();
+                //... and we show the find optimal route menu
+                this.findOptimalRoute();
+            }
+            if (!graph.ifNodeExists(destinationNodeId)) {
+                //...if the node does not exist then...
+                //...show an error message saying "ERROR: Please enter a node identifier that exists."...
+                System.out.println("ERROR: Please enter a node identifier that exists.");
+                //...and call again the find optimal route menu
+                this.findOptimalRoute();
+            } else {
+                //Leave an empty line.
+                System.out.println();
+                //Show a message saying "Finding the optimal route...".
+                System.out.println("Finding the optimal route...");
+                //Leave an empty line.
+                System.out.println();
+                //TODO: Find the optimal route
+            }
+        }
     }
-
 }

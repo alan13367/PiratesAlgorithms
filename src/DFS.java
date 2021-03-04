@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class DfsAlgorithm {
+public class DFS {
     /**
      * The function from a starting node does a DFS for the interest points in the graph.
      * @param start integer that indicates the starting node for the search
      * @param graph the graph we want to explore
      */
-    public ArrayList<Node> dfs(int start, Graph graph){
+    public ArrayList<Node> dfsAlgorithm(int start, Graph graph){
 
         ArrayList<Node> dfsList = new ArrayList<>();
 
@@ -27,7 +27,6 @@ public class DfsAlgorithm {
         int index = graph.getIndex(current);
         visited[index] = true;
         if(graph.getNodes().get(index).getSafe()){
-            System.out.println("Id: " + current + " Name: " + graph.getNodes().get(index).getName());
             dfsList.add(graph.getNodes().get(index));
         }
         for(Node neighbour: graph.getNeighbours(current)){
