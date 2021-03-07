@@ -326,8 +326,11 @@ public class UI {
         Scanner scanner =  new Scanner(System.in);  //Scanner to get the user input through the System input.
         int originNodeId = 0;                       //integer to store an identification from the origin node
         int destinationNodeId = 0;                  //integer to store an identification from the destination node
+        Dijkstra dijkstra = new Dijkstra(this.graph);
+        int i = 1;
+        List<Node> nodeList = null;
         //Show a message saying "Enter the origin node's identifier: ".
-        System.out.println("Enter the origin node's identifier: ");
+        System.out.print("Enter the origin node's identifier: ");
         //Store the user input inside originNodeId
         try {
             originNodeId = scanner.nextInt();
@@ -349,7 +352,7 @@ public class UI {
             this.findOptimalRoute();
         } else {
             //Show a message saying "Enter the destination node's identifier: ".
-            System.out.println("Enter the destination node's identifier: ");
+            System.out.print("Enter the destination node's identifier: ");
             //Store the user input inside destinationNodeId
             try {
                 destinationNodeId = scanner.nextInt();
@@ -375,7 +378,20 @@ public class UI {
                 System.out.println("Finding the optimal route...");
                 //Leave an empty line.
                 System.out.println();
-                //TODO: Find the optimal route
+                try {
+                    nodeList = dijkstra.findShortestPath(originNodeId, destinationNodeId);
+                } catch (IndexOutOfBoundsException e) {
+                    //...if there is no connexion then...
+                    //...show an error message saying "ERROR: Index out of bounds, origin and destination are not connected."...
+                    System.out.println("ERROR: Index out of bounds, origin and destination are not connected.");
+                    //...and call again the find optimal route menu
+                    this.findOptimalRoute();
+                }
+                for (Node node: nodeList) {
+                    System.out.println(i + ") " + node.getName());
+                    i++;
+                }
+                this.routesMenu();
             }
         }
     }
