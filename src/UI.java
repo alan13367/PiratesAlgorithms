@@ -170,37 +170,27 @@ public class UI {
         try {
             //Get the character selected and transform it to uppercase given a String.
             functionality = Character.toUpperCase(scanner.nextLine().charAt(0));
+            //If the functionality selected is...
+            //... A, then we give the user a menu to find points of interest.
+            //... B, then we give the user a menu to find dangerous places.
+            //... C, then we show the user the universal nautical chart.
+            //... D, then we give the user a menu to find the optimal route.
+            //... E, then we go back to the starting menu.
+            //... not a character value between A and E, then we output an error message "ERROR: Functionality
+            //must be a character value (A-E)"
+            //Leave an empty line.
+            //... and we show the routes menu again
             switch (functionality) {
-                //If the functionality selected is...
-                case 'A':
-                    //... A, then we give the user a menu to find points of interest.
-                    this.findPointsOfInterest();
-                    break;
-                case 'B':
-                    //... B, then we give the user a menu to find dangerous places.
-                    this.findDangerousPlaces();
-                    break;
-                case 'C':
-                    //... C, then we show the user the universal nautical chart.
-                    this.showUniversalNauticalChart();
-                    break;
-                case 'D':
-                    //... D, then we give the user a menu to find the optimal route.
-                    this.findOptimalRoute();
-                    break;
-                case 'E':
-                    //... E, then we go back to the starting menu.
-                    this.startMenu();
-                    break;
-                default:
-                    //... not a character value between A and E, then we output an error message "ERROR: Functionality
-                    //must be a character value (A-E)"
+                case 'A' -> this.findPointsOfInterest();
+                case 'B' -> this.findDangerousPlaces();
+                case 'C' -> this.showUniversalNauticalChart();
+                case 'D' -> this.findOptimalRoute();
+                case 'E' -> this.startMenu();
+                default -> {
                     System.out.println("ERROR: Functionality must be a character value (A-E)");
-                    //Leave an empty line.
                     System.out.println();
-                    //... and we show the routes menu again
                     this.routesMenu();
-                    break;
+                }
             }
         //... if that is not the case, we catch the exception.
         } catch (InputMismatchException e) {
@@ -387,6 +377,7 @@ public class UI {
                     //...and call again the find optimal route menu
                     this.findOptimalRoute();
                 }
+                assert nodeList != null;
                 for (Node node: nodeList) {
                     System.out.println(i + ") " + node.getName());
                     i++;
