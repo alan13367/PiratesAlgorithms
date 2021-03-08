@@ -99,7 +99,7 @@ public class GraphReader {
 
 
     /**
-     *  A method that recursively calls itself in order to sort the entire nodes arraylist.
+     *  A method that recursively calls itself in order to sort the entire edges arraylist.
      * @param nodes array list of the nodes gotten from the file
      * @param low lowest index of nodes
      * @param high highest index of nodes
@@ -115,7 +115,7 @@ public class GraphReader {
     }
 
     /**
-     * A method which takes the nodes and checks whether its higher or lower than the comparing pivot and orders the
+     * A method which takes the edges and checks whether its higher or lower than the comparing pivot and orders the
      * edges based on it.
      * @param edges array list of the nodes gotten from the file
      * @param low lowest index of nodes
