@@ -4,6 +4,7 @@ public class Graph {
     private ArrayList<Node> nodes;
     private int[] dict;
     private float[][] aMatrix;
+    private ArrayList<Edge> edges;
 
     /**
      * The Graph constructor.
@@ -14,6 +15,19 @@ public class Graph {
         this.nodes = nodes;
         this.dict = dict;
     }
+
+    public Graph() {}
+
+    public void setEdges (ArrayList<Edge> edges) {
+        this.edges = edges;
+    }
+
+
+    public void addNode(Node node){
+
+        this.nodes.add(node);
+    }
+
 
     /**
      * Getter of the nodes
