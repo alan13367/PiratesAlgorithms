@@ -14,6 +14,7 @@ public class GraphReader {
      */
     public Graph reader(String path) throws FileNotFoundException {
         ArrayList<Node> nodes = new ArrayList<>();
+        ArrayList<Edge> edges = new ArrayList<>();
         Graph graph;
         int numNode = 0;
         int numEdge = 0;
@@ -39,18 +40,27 @@ public class GraphReader {
             Arrays.fill(row, 0.0f);
         }
 
-        numEdge = reader.nextInt();
-        reader.nextLine();
-        for (int i = 0; i < numEdge; i++) {
-            temp = reader.nextLine();
-            splitted = temp.split(",");
-            Edge edge = new Edge(Integer.parseInt(splitted[0]), Integer.parseInt(splitted[1]), Float.parseFloat(splitted[2]));
-            mtx[graph.getIndex(edge.getFrom())][graph.getIndex(edge.getTo())] = edge.getCost();
-            mtx[graph.getIndex(edge.getTo())][graph.getIndex(edge.getFrom())] = edge.getCost();
-        }
+            numEdge = reader.nextInt();
+            reader.nextLine();
+            for (int i = 0; i < numEdge; i++) {
+                temp = reader.nextLine();
+                splitted = temp.split(",");
+                Edge edge = new Edge(Integer.parseInt(splitted[0]), Integer.parseInt(splitted[1]), Float.parseFloat(splitted[2]));
+                edges.add(edge);
+                mtx[graph.getIndex(edge.getFrom())][graph.getIndex(edge.getTo())] = edge.getCost();
+                mtx[graph.getIndex(edge.getTo())][graph.getIndex(edge.getFrom())] = edge.getCost();
+            }
+            sortEdges(edges,0,edges.size()-1);
 
-        graph.setaMatrix(mtx);
-        return graph;
+            graph.setEdges(edges);
+            graph.setaMatrix(mtx);
+            return graph;
+        }catch (FileNotFoundException e){
+            System.out.println("File not found");
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
     /**
@@ -88,7 +98,7 @@ public class GraphReader {
 
 
     /**
-     *  A method that recursively calls itself in order to sort the entire nodes arraylist.
+     *  A method that recursively calls itself in order to sort the entire edges arraylist.
      * @param nodes array list of the nodes gotten from the file
      * @param low lowest index of nodes
      * @param high highest index of nodes
@@ -100,6 +110,56 @@ public class GraphReader {
 
             sort(nodes, low, partindex-1);
             sort(nodes, partindex+1, high);
+        }
+    }
+
+    /**
+     * A method which takes the edges and checks whether its higher or lower than the comparing pivot and orders the
+     * edges based on it.
+     * @param edges array list of the nodes gotten from the file
+     * @param low lowest index of nodes
+     * @param high highest index of nodes
+     * @return integer refering to the index of the partition
+     */
+    private int partitionEdges(ArrayList<Edge> edges, int low, int high) {
+        Edge pivot = edges.get(high); //Pivot element
+        int i = (low-1); // index of smaller element
+        for (int j=low; j<high; j++) {
+
+            // =====================================================
+            // Sort by Id ascending order
+            // =====================================================
+
+            //If node(j) lower than pivot swap nodes(i) and nodes(j)
+            if (edges.get(j).getCost() < pivot.getCost()) {
+                i++;
+                Edge temp = edges.get(i);
+                edges.set(i, edges.get(j));
+                edges.set(j, temp);
+            }
+        }
+        // swap nodes(i+1) and nodes(high) (or pivot)
+        Edge temp = edges.get(i+1);
+        edges.set(i+1, edges.get(high));
+        edges.set(high, temp);
+
+        return i+1;
+    }
+
+
+    /**
+     *  A method that recursively calls itself in order to sort the entire Edges arraylist.
+     * @param edges array list of the nodes gotten from the file
+     * @param low lowest index of nodes
+     * @param high highest index of nodes
+     */
+    private void sortEdges(ArrayList<Edge> edges, int low, int high) {
+        if (low < high) {
+
+            int partindex = partitionEdges(edges, low, high);
+
+            sortEdges(edges, low, partindex-1);
+            sortEdges(edges, partindex+1, high);
         }
     }
 

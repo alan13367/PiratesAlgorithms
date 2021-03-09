@@ -4,6 +4,7 @@ public class Graph {
     private ArrayList<Node> nodes;
     private int[] dict;
     private float[][] aMatrix;
+    private ArrayList<Edge> edges;
 
     /**
      * The Graph constructor.
@@ -14,6 +15,16 @@ public class Graph {
         this.nodes = nodes;
         this.dict = dict;
     }
+
+    /**
+     * The Edges list Getter
+     * @return an arraylist of all the edges of the graphs ordered from less to more weight
+     */
+    public ArrayList<Edge> getEdges() {
+        return edges;
+    }
+
+
 
     /**
      * Getter of the nodes
@@ -65,6 +76,22 @@ public class Graph {
         }
         return out;
     }
+
+    public void setEdges (ArrayList<Edge> edges) {
+        this.edges = edges;
+    }
+
+    /**
+     * The function from a starting node does a DFS for the interest points in the graph.
+     * @param start integer that indicates the starting node for the search
+     */
+    public void dfs(int start){
+
+        boolean visited[] = new boolean[nodes.size()];
+
+        dfsRecursive(start, visited);
+
+    }
     /**
      * Check if a given node exists in a graph by looking at its ID
      * @param originNodeId the id that represents the node we are looking for
@@ -79,4 +106,26 @@ public class Graph {
         }
         return found;
     }
+
+    /**
+     * This function recursively calls itself in order to check wether the current node we are exploring is an interest
+     * and based on it move into their neighbours to keep exploring using Depth-First Search.
+     * @param current Integer that refers to the id of the node we are currently exploring
+     * @param visited Boolean array that has n positions that indicates us if we have visited or not the node
+     */
+    private void dfsRecursive(int current, boolean[] visited){
+        int index = getIndex(current);
+        visited[index] = true;
+        if(nodes.get(index).getSafe()){
+            System.out.println("Id: " + current + " Name: " + nodes.get(index).getName());
+        }
+        for(Node neighbour: getNeighbours(current)){
+            if(!visited[getIndex(neighbour.getId())] && neighbour.getSafe()){
+                dfsRecursive(neighbour.getId(),visited);
+            }
+        }
+    }
+
+
+
 }
