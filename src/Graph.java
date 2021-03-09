@@ -1,3 +1,4 @@
+import java.security.PublicKey;
 import java.util.ArrayList;
 
 public class Graph {
@@ -16,17 +17,14 @@ public class Graph {
         this.dict = dict;
     }
 
-    public Graph() {}
-
-    public void setEdges (ArrayList<Edge> edges) {
-        this.edges = edges;
+    /**
+     * The Edges list Getter
+     * @return an arraylist of all the edges of the graphs ordered from less to more weight
+     */
+    public ArrayList<Edge> getEdges() {
+        return edges;
     }
 
-
-    public void addNode(Node node){
-
-        this.nodes.add(node);
-    }
 
 
     /**
@@ -78,6 +76,10 @@ public class Graph {
             }
         }
         return out;
+    }
+
+    public void setEdges (ArrayList<Edge> edges) {
+        this.edges = edges;
     }
 
     /**
