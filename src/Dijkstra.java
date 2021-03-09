@@ -47,6 +47,7 @@ public class Dijkstra {
 
         d[graph.getIndex(start.getId())] = 0;
         Node curr = start;
+        walk.add(start);
         while(!allVisited(visited) && !visited[graph.getIndex(end.getId())]){
             for(Node adj : graph.getNeighbours(curr.getId())){
                 if(!visited[graph.getIndex(adj.getId())]){
