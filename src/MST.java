@@ -4,7 +4,7 @@ import java.util.List;
 
 public class MST {
 
-    int[] fathers;
+    private int[] fathers;
 
     /**
      * Constructor of the MST class

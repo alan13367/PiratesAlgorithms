@@ -306,7 +306,14 @@ public class UI {
         System.out.println("Finding the MST...");
         //Leave an empty line.
         System.out.println();
-        //TODO: find the MST
+        int[] arr = new int[graph.getNodes().size()];
+        MST mst = new MST(arr);
+
+        ArrayList<Edge> edges = mst.mst(graph);
+        for (Edge edge: edges){
+            System.out.println("From: " + edge.getFrom() + " --> To: " + edge.getTo() + " With cost: " + edge.getCost());
+        }
+        this.routesMenu();
     }
 
     /**

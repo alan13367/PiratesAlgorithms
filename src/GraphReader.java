@@ -40,27 +40,21 @@ public class GraphReader {
             Arrays.fill(row, 0.0f);
         }
 
-            numEdge = reader.nextInt();
-            reader.nextLine();
-            for (int i = 0; i < numEdge; i++) {
-                temp = reader.nextLine();
-                splitted = temp.split(",");
-                Edge edge = new Edge(Integer.parseInt(splitted[0]), Integer.parseInt(splitted[1]), Float.parseFloat(splitted[2]));
-                edges.add(edge);
-                mtx[graph.getIndex(edge.getFrom())][graph.getIndex(edge.getTo())] = edge.getCost();
-                mtx[graph.getIndex(edge.getTo())][graph.getIndex(edge.getFrom())] = edge.getCost();
-            }
-            sortEdges(edges,0,edges.size()-1);
-
-            graph.setEdges(edges);
-            graph.setaMatrix(mtx);
-            return graph;
-        }catch (FileNotFoundException e){
-            System.out.println("File not found");
-            e.printStackTrace();
+        numEdge = reader.nextInt();
+        reader.nextLine();
+        for (int i = 0; i < numEdge; i++) {
+            temp = reader.nextLine();
+            splitted = temp.split(",");
+            Edge edge = new Edge(Integer.parseInt(splitted[0]), Integer.parseInt(splitted[1]), Float.parseFloat(splitted[2]));
+            edges.add(edge);
+            mtx[graph.getIndex(edge.getFrom())][graph.getIndex(edge.getTo())] = edge.getCost();
+            mtx[graph.getIndex(edge.getTo())][graph.getIndex(edge.getFrom())] = edge.getCost();
         }
-        return null;
+        sortEdges(edges,0,edges.size()-1);
 
+        graph.setEdges(edges);
+        graph.setaMatrix(mtx);
+        return graph;
     }
 
     /**
