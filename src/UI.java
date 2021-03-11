@@ -176,7 +176,7 @@ public class UI {
             //... C, then we show the user the universal nautical chart.
             //... D, then we give the user a menu to find the optimal route.
             //... E, then we go back to the starting menu.
-            //... not a character value between A and E, then we output an error message "ERROR: Functionality
+            //... not a character value between A and E, then we output an error message "ERROR: Functionality.
             //must be a character value (A-E)"
             //Leave an empty line.
             //... and we show the routes menu again
