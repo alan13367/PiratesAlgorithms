@@ -40,6 +40,12 @@ public class Dijkstra {
         int count = 0;
         finalCost = Float.MAX_VALUE;
         walk = new ArrayList<>();
+        ArrayList<Node>[] walks = new ArrayList[graph.getNodes().size()];
+        for (int i = 0; i < walks.length; i++) {
+            walks[i] = new ArrayList<>();
+            walks[i].add(start);
+        }
+
         float[] d = new float[graph.getNodes().size()];
         Arrays.fill(d, Float.MAX_VALUE);
         boolean[] visited = new boolean[graph.getNodes().size()];
@@ -47,26 +53,30 @@ public class Dijkstra {
 
         d[graph.getIndex(start.getId())] = 0;
         Node curr = start;
-        while(!allVisited(visited) && !visited[graph.getIndex(end.getId())]){
+        while(!allVisited(visited) /*&& !visited[graph.getIndex(end.getId())]*/){
             for(Node adj : graph.getNeighbours(curr.getId())){
                 if(!visited[graph.getIndex(adj.getId())]){
                     float cost = d[graph.getIndex(curr.getId())] + graph.getCost(curr.getId(), adj.getId());
 
                     if(d[graph.getIndex(adj.getId())] > cost){
                         d[graph.getIndex(adj.getId())] = cost;
+                        walks[graph.getIndex(adj.getId())].clear();
+                        walks[graph.getIndex(adj.getId())].addAll(walks[graph.getIndex(curr.getId())]);
+                        walks[graph.getIndex(adj.getId())].add(adj);
                     }
 
                 }
             }
-            walk.add(curr);
+            //walk.add(curr);
             count++;
             visited[graph.getIndex(curr.getId())] = true;
             if(!allVisited(visited)){
                 curr = findMin(d, visited);
             }
         }
-        finalCost = d[graph.getIndex(walk.get(walk.size() - 1).getId())];
-        return walk;
+        //finalCost = d[graph.getIndex(walk.get(walk.size() - 1).getId())];
+        finalCost = d[graph.getIndex(end.getId())];
+        return walks[graph.getIndex(end.getId())];
     }
 
     /**
