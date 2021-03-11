@@ -111,7 +111,7 @@ public class UI {
                     //TODO: 4. Crew (Tables)
                     break;
                 case 5:
-                    System.out.println("So long, comrade!");
+                    System.out.println("So long, comrade! ⛵");
                     //... 5, then we output a farewell message and exit the program.
                     System.exit(0);
                     break;
@@ -311,7 +311,7 @@ public class UI {
 
         ArrayList<Edge> edges = mst.mst(graph);
         for (Edge edge: edges){
-            System.out.println("From: " + edge.getFrom() + " --> To: " + edge.getTo() + " With cost: " + edge.getCost());
+            System.out.println("From: " + edge.getFrom() + " ➡ To: " + edge.getTo() + " With cost: " + edge.getCost());
         }
         this.routesMenu();
     }
@@ -324,7 +324,6 @@ public class UI {
         int originNodeId = 0;                       //integer to store an identification from the origin node
         int destinationNodeId = 0;                  //integer to store an identification from the destination node
         Dijkstra dijkstra = new Dijkstra(this.graph);
-        int i = 1;
         List<Node> nodeList = null;
         //Show a message saying "Enter the origin node's identifier: ".
         System.out.print("Enter the origin node's identifier: ");
@@ -385,10 +384,15 @@ public class UI {
                     this.findOptimalRoute();
                 }
                 assert nodeList != null;
-                for (Node node: nodeList) {
-                    System.out.println(i + ") " + node.getName());
-                    i++;
+                System.out.println("0) " + nodeList.get(0).getName());
+                for (int i = 1; i < nodeList.size(); i++) {
+                    System.out.println("    ⬆");
+                    System.out.println(graph.getCost(nodeList.get(i - 1).getId(), nodeList.get(i).getId()));
+                    System.out.println("    ⬇");
+                    System.out.println(i + ") " + nodeList.get(i).getName());
                 }
+                System.out.println();
+                System.out.println("Final cost: " + dijkstra.getFinalCost());
                 this.routesMenu();
             }
         }
