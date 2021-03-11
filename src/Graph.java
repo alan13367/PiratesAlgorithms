@@ -1,9 +1,11 @@
+import java.security.PublicKey;
 import java.util.ArrayList;
 
 public class Graph {
     private ArrayList<Node> nodes;
     private int[] dict;
     private float[][] aMatrix;
+    private ArrayList<Edge> edges;
 
     /**
      * The Graph constructor.
@@ -14,6 +16,16 @@ public class Graph {
         this.nodes = nodes;
         this.dict = dict;
     }
+
+    /**
+     * The Edges list Getter
+     * @return an arraylist of all the edges of the graphs ordered from less to more weight
+     */
+    public ArrayList<Edge> getEdges() {
+        return edges;
+    }
+
+
 
     /**
      * Getter of the nodes
@@ -65,6 +77,12 @@ public class Graph {
         }
         return out;
     }
+
+    public void setEdges (ArrayList<Edge> edges) {
+        this.edges = edges;
+    }
+
+
     /**
      * Check if a given node exists in a graph by looking at its ID
      * @param originNodeId the id that represents the node we are looking for
