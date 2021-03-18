@@ -66,7 +66,7 @@ public class BTreeReader {
         return in;
     }
 
-    public static void delete(BTNode root, String name){
+    public static BTNode delete(BTNode root, String name){
         Queue<BTNode> check = new LinkedList<>();
         check.add(root);
         BTNode curr = root;
@@ -79,7 +79,16 @@ public class BTreeReader {
             }
             curr = check.poll();
         }
-        BTNode parent = curr.getParent();
+        BTNode parent = null;
+        boolean modifyingRoot = false;
+        if(curr.getParent() == null){
+            parent = new BTNode("tmp", (BigInteger.valueOf(-1)));
+            parent.setrChild(curr);
+            modifyingRoot = true;
+        }
+        else{
+            parent = curr.getParent();
+        }
         if(curr.getrChild() == null && curr.getlChild() == null){
             if(parent.getlChild() == curr){
                 parent.setlChild(null);
@@ -116,6 +125,11 @@ public class BTreeReader {
                 parent.setrChild(child);
             }
         }
+        if(modifyingRoot){
+            root = parent.getrChild();
+            root.setParent(null);
+        }
+        return root;
     }
 
 }
