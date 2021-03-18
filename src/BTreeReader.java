@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class BTreeReader {
@@ -63,4 +65,57 @@ public class BTreeReader {
         }
         return in;
     }
+
+    public static void delete(BTNode root, String name){
+        Queue<BTNode> check = new LinkedList<>();
+        check.add(root);
+        BTNode curr = root;
+        while(curr.getName().compareTo(name) != 0){
+            if(curr.getlChild() != null){
+                check.add(curr.getlChild());
+            }
+            if(curr.getrChild() != null){
+                check.add(curr.getrChild());
+            }
+            curr = check.poll();
+        }
+        BTNode parent = curr.getParent();
+        if(curr.getrChild() == null && curr.getlChild() == null){
+            if(parent.getlChild() == curr){
+                parent.setlChild(null);
+            }
+            else{
+                parent.setrChild(null);
+            }
+        }
+        else if(curr.getrChild() == null && curr.getlChild() != null){
+            if(parent.getlChild() == curr){
+                parent.setlChild(curr.getlChild());
+            }
+            else{
+                parent.setrChild(curr.getlChild());
+            }
+        }
+        else if(curr.getrChild() != null && curr.getlChild() == null){
+            if(parent.getlChild() == curr){
+                parent.setlChild(curr.getrChild());
+            }
+            else{
+                parent.setrChild(curr.getrChild());
+            }
+        }
+        else if(curr.getrChild() != null && curr.getlChild() != null){
+            BTNode child = curr.getrChild();
+            while(child.getlChild() != null){
+                child = child.getlChild();
+            }
+            if(parent.getlChild() == curr){
+                parent.setlChild(child);
+            }
+            else{
+                parent.setrChild(child);
+            }
+        }
+    }
+
 }
