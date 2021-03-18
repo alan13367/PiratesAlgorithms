@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BTreeReader {
@@ -20,7 +21,7 @@ public class BTreeReader {
         BTNode root = build(scanner.nextLine());
         do{
             BTNode curr = build(scanner.nextLine());
-            root = insert(root, curr);
+            root = add(root, curr);
         }while (scanner.hasNextLine());
         return root;
     }
@@ -31,8 +32,7 @@ public class BTreeReader {
      * @return the node with the name and value filled in
      */
     private static BTNode build(String input){
-        String[] split = new String[2];
-        split = input.split(",");
+        String[] split = input.split(",");
         return new BTNode(split[0], new BigInteger(split[1]));
     }
 
@@ -42,21 +42,23 @@ public class BTreeReader {
      * @param add the child node to be inserted
      * @return the parent node with the child attached
      */
-    private static BTNode insert(BTNode in, BTNode add){
+    public static BTNode add(BTNode in, BTNode add){
         if(add.getValue().compareTo(in.getValue()) >= 0){
             if(in.getrChild() == null){
+                add.setParent(in);
                 in.setrChild(add);
             }
             else{
-                in.setrChild(insert(in.getrChild(), add));
+                in.setrChild(add(in.getrChild(), add));
             }
         }
         else{
             if(in.getlChild() == null){
+                add.setParent(in);
                 in.setlChild(add);
             }
             else{
-                in.setlChild(insert(in.getlChild(),add));
+                in.setlChild(add(in.getlChild(),add));
             }
         }
         return in;
