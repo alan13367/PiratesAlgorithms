@@ -4,6 +4,7 @@ public class BTNode {
 
     private String name;
     private BigInteger value;
+    private BTNode parent;
     private BTNode lChild;
     private BTNode rChild;
 
@@ -17,6 +18,7 @@ public class BTNode {
         this.value = value;
         this.lChild = null;
         this.rChild = null;
+        this.parent = null;
     }
 
     /**
@@ -36,6 +38,14 @@ public class BTNode {
     }
 
     /**
+     * Getter to get the parent of the node
+     * @return the parent of the node
+     */
+    public BTNode getParent() {
+        return parent;
+    }
+
+    /**
      * Getter to get the left child of the Node
      * @return the left child of the node
      */
@@ -49,6 +59,14 @@ public class BTNode {
      */
     public BTNode getrChild() {
         return rChild;
+    }
+
+    /**
+     * Setter to input the parent of the node
+     * @param parent the node to be set as the parent
+     */
+    public void setParent(BTNode parent) {
+        this.parent = parent;
     }
 
     /**
