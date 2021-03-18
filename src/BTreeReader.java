@@ -66,6 +66,12 @@ public class BTreeReader {
         return in;
     }
 
+    /**
+     * Method to delete a particular node from the binary tree
+     * @param root the root node of the tree
+     * @param name the name of the node to be deleted
+     * @return the new root of the tree. Will be the same if it wasn't deleted.
+     */
     public static BTNode delete(BTNode root, String name){
         Queue<BTNode> check = new LinkedList<>();
         check.add(root);
