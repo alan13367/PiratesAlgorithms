@@ -1,15 +1,17 @@
 import java.io.FileNotFoundException;
+import java.math.BigInteger;
 import java.util.*;
 
 public class UI {
     private Graph graph;
+    private BTNode btNode;
     /**
      * UI starting message
      */
     public void ui () {
         //Output the starting message "-= Pirates of the Mediterranean =-".
         System.out.println("-= ☠ Pirates of the Mediterranean ☠ =-");
-        this.dataset();
+        this.datasetGraph();
     }
 
     /**
@@ -22,7 +24,7 @@ public class UI {
      * XXL) graphXXL.paed
      * XXS) graphXXS.paed
      */
-    public void dataset () {
+    public void datasetGraph() {
         GraphReader graphReader = new GraphReader();
         Scanner scanner = new Scanner(System.in);
         String dataset;
@@ -49,17 +51,66 @@ public class UI {
             //... not a string, then we output an error message "ERROR: Input mismatch, a string is required."
             System.out.println("ERROR: Input mismatch, a string is required.");
             //... and we show the starting menu again
-            this.dataset();
+            this.datasetGraph();
         }
         catch (FileNotFoundException e) {
             //... not a correct file, then we output an error message "ERROR: File not found, please enter a valid dataset."
             System.out.println("ERROR: File not found, please enter a valid dataset.");
             //... and we show the starting menu again
-            this.dataset();
+            this.datasetGraph();
+        }
+        //Call the starting menu.
+        this.datasetTrees();
+    }
+
+    /**
+     * Choose a dataset:
+     * L) treeL.paed
+     * M) treeM.paed
+     * S) treeS.paed
+     * XL) treeXL.paed
+     * XS) treeXS.paed
+     * XXL) treeXXL.paed
+     * XXS) treeXXS.paed
+     */
+    public void datasetTrees() {
+        Scanner scanner = new Scanner(System.in);
+        String dataset;
+        //Leave an empty line.
+        System.out.println();
+        System.out.println("L) treeL.paed");
+        System.out.println("M) treeM.paed");
+        System.out.println("S) treeS.paed");
+        System.out.println("XL) treeXL.paed");
+        System.out.println("XS) treeXS.paed");
+        System.out.println("XXL) treeXXL.paed");
+        System.out.println("XXS) treeXXS.paed");
+        //Leave an empty line.
+        System.out.println();
+        //Show a message saying "Choose an option: ".
+        System.out.print("Choose a dataset: ");
+        try {
+            //Get the dataset selected.
+            dataset = scanner.nextLine();
+            //If the dataset selected is...
+            this.btNode = BTreeReader.reader("tree"+ dataset.toUpperCase() +".paed");
+        }
+        catch (InputMismatchException e) {
+            //... not a string, then we output an error message "ERROR: Input mismatch, a string is required."
+            System.out.println("ERROR: Input mismatch, a string is required.");
+            //... and we show the starting menu again
+            this.datasetTrees();
+        }
+        catch (FileNotFoundException e) {
+            //... not a correct file, then we output an error message "ERROR: File not found, please enter a valid dataset."
+            System.out.println("ERROR: File not found, please enter a valid dataset.");
+            //... and we show the starting menu again
+            this.datasetTrees();
         }
         //Call the starting menu.
         this.startMenu();
     }
+
     /**
      * Show the starting menu, the one that the user will see once they start the program.It gives a range of options to
      * work with related to sections of the project:
@@ -102,7 +153,7 @@ public class UI {
                     this.routesMenu();
                     break;
                 case 2:
-                    //TODO: 2. Inventory (Binary trees)
+                    this.inventoryMenu();
                     break;
                 case 3:
                     //TODO: 3. Deck (R trees)
@@ -134,6 +185,271 @@ public class UI {
             System.out.println();
             //... and we show the starting menu again
             this.startMenu();
+        }
+    }
+    /**
+     * Show a menu where the user chooses how to manage the loot. It gives the next range of functionalities to
+     * choose from:
+     * A. Add treasure
+     * B. Remove treasure
+     * C. List loot
+     * D. Search by value (exact)
+     * E. Search by value (range)
+     * F. Go back
+     */
+    public void inventoryMenu () {
+        Scanner scanner = new Scanner(System.in);   //Scanner to get the user input through the System input.
+        char functionality;                     //character to store the functionality selected.
+        //Leave an empty line.
+        System.out.println();
+        //Show a message saying "    A. Add treasure".
+        System.out.println("    A. Add treasure");
+        //Show a message saying "    B. Find dangerous places (BFS)".
+        System.out.println("    B. Remove treasure");
+        //Show a message saying "    C. List loot".
+        System.out.println("    C. List loot");
+        //Show a message saying "    D. Search by value (exact)".
+        System.out.println("    D. Search by value (exact)");
+        //Show a message saying "    E. Search by value (range)".
+        System.out.println("    E. Search by value (range)");
+        //Leave an empty line.
+        System.out.println();
+        //Show a message saying "    F. Go back".
+        System.out.println("    F. Go back");
+        //Leave an empty line.
+        System.out.println();
+        //Show a message saying "What functionality do you want to run? ".
+        System.out.print("What functionality do you want to run? ");
+        //Try to scan the user input looking for a character...
+        try {
+            //Get the character selected and transform it to uppercase given a String.
+            functionality = Character.toUpperCase(scanner.nextLine().charAt(0));
+            //If the functionality selected is...
+            //... A, then we give the user a menu to add a treasure.
+            //... B, then we give the user a menu to remove a treasure.
+            //... C, then we show the user a list of the loot.
+            //... D, then we give the user a menu to search for an exact treasure given a value.
+            //... E, then we give the user a menu to search for a range of treasures given a value.
+            //... F, then we go back to the starting menu.
+            //... not a character value between A and F, then we output an error message "ERROR: Functionality.
+            //must be a character value (A-F)"
+            //Leave an empty line.
+            //... and we show the routes menu again
+            switch (functionality) {
+                case 'A' -> this.addTreasure();
+                case 'B' -> this.removeTreasure();
+                case 'C' -> this.listLoot();
+                case 'D' -> this.searchByValueExact();
+                case 'E' -> this.searchByValueRange();
+                case 'F' -> this.startMenu();
+                default -> {
+                    System.out.println("ERROR: Functionality must be a character value (A-F)");
+                    System.out.println();
+                    this.inventoryMenu();
+                }
+            }
+            //... if that is not the case, we catch the exception.
+        } catch (InputMismatchException e) {
+            //... not a character, then we output an error message "ERROR: Input mismatch, a character is required."
+            System.out.println("ERROR: Input mismatch, a character is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the routes menu again
+            this.inventoryMenu();
+        }
+    }
+
+    /**
+     * Allows the user to add a new treasure to the tree, given a treasure name and a treasure value.
+     */
+    public void addTreasure() {
+        Scanner scanner = new Scanner(System.in);
+        String treasuresName = new String();
+        BigInteger treasureValue;
+        System.out.println();
+        System.out.print("Enter the treasure's name: ");
+        try {
+            treasuresName = scanner.nextLine();
+        } catch (InputMismatchException e) {
+            //... not a String, then we output an error message "ERROR: Input mismatch, a String is required."
+            System.out.println("ERROR: Input mismatch, a String is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the find optimal route menu
+            this.addTreasure();
+        }
+        System.out.print("Enter the treasure's value: ");
+        try {
+            treasureValue = scanner.nextBigInteger();
+        } catch (InputMismatchException e) {
+            //... not a Big Integer, then we output an error message "ERROR: Input mismatch, a Big Integer is required."
+            System.out.println("ERROR: Input mismatch, a Big Integer is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the find optimal route menu
+            this.addTreasure();
+        }
+        //TODO: Add treasure
+        System.out.println();
+        System.out.println("The treasure was correctly added to the loot.");
+        this.inventoryMenu();
+    }
+
+    public void removeTreasure() {
+        Scanner scanner = new Scanner(System.in);
+        String treasuresName = new String();
+        System.out.println();
+        System.out.print("Enter the treasure's name: ");
+        try {
+            treasuresName = scanner.nextLine();
+        } catch (InputMismatchException e) {
+            //... not a String, then we output an error message "ERROR: Input mismatch, a String is required."
+            System.out.println("ERROR: Input mismatch, a String is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the find optimal route menu
+            this.removeTreasure();
+        }
+        //TODO: Check if treasure exists
+        //TODO: Remove treasure
+        System.out.println();
+        System.out.println("The treasure was correctly removed from the loot.");
+        this.inventoryMenu();
+    }
+
+    public void listLoot() {
+        Scanner scanner = new Scanner(System.in);   //Scanner to get the user input through the System input.
+        String traversal = new String();            //String to store the traversal selected.
+        //Leave an empty line.
+        System.out.println();
+        //Show a message saying "    I. Preorder".
+        System.out.println("    I. Preorder");
+        //Show a message saying "    II. Postorder".
+        System.out.println("    II. Postorder");
+        //Show a message saying "    III. Inorder".
+        System.out.println("    III. Inorder");
+        //Show a message saying "    IV. By level".
+        System.out.println("    IV. By level");
+        //Leave an empty line.
+        System.out.println();
+        //Show a message saying "Pick a traversal: ".
+        System.out.print("Pick a traversal: ");
+        //Try to scan the user input looking for a character...
+        try {
+            //Get the character selected and transform it to uppercase given a String.
+            traversal = scanner.nextLine();
+            //If the traversal selected is...
+            if (traversal.toUpperCase().compareTo("I") == 0) {
+                //... I, then do a preorder traversal.
+                //TODO: Preorder traversal
+                this.inventoryMenu();
+            } else {
+                if (traversal.toUpperCase().compareTo("II") == 0) {
+                    //... II, then we do a postorder traversal.
+                    //TODO: Postorder traversal
+                    this.inventoryMenu();
+                } else {
+                    if (traversal.toUpperCase().compareTo("III") == 0) {
+                        //... III, then we do a inorder traversal.
+                        //TODO: Inorder traversal
+                        this.inventoryMenu();
+                    } else {
+                        if (traversal.toUpperCase().compareTo("IV") == 0) {
+                            //... IV, then do a by level traversal.
+                            //TODO: By level traversal
+                            this.inventoryMenu();
+                        } else {
+                            //Leave an empty line.
+                            System.out.println();
+                            //... not a String value between I and IV, then we output an error message "ERROR: Traversal
+                            //must be a String value (I-IV)"
+                            System.out.println("ERROR: Traversal must be a String value (I-IV)");
+                            this.listLoot();
+                            //... and we show the list loot menu again
+                        }
+                    }
+                }
+            }
+            //... if that is not the case, we catch the exception.
+        } catch (InputMismatchException e) {
+            //... not a String, then we output an error message "ERROR: Input mismatch, a String is required."
+            System.out.println("ERROR: Input mismatch, a String is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the routes menu again
+            this.listLoot();
+        }
+    }
+
+    public void searchByValueExact() {
+        Scanner scanner = new Scanner(System.in);
+        BigInteger treasureValue;
+        String treasureName = new String();
+        System.out.println();
+        System.out.print("Enter the value to search for: ");
+        try {
+            treasureValue = scanner.nextBigInteger();
+        } catch (InputMismatchException e) {
+            //... not a Big Integer, then we output an error message "ERROR: Input mismatch, a Big Integer is required."
+            System.out.println("ERROR: Input mismatch, a Big Integer is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the find optimal route menu
+            this.searchByValueExact();
+        }
+        //TODO: Search a treasure with the exact value.
+        System.out.println();
+        System.out.println("A treasure with this value was found: " + treasureName);
+        this.inventoryMenu();
+    }
+
+    public void searchByValueRange() {
+        Scanner scanner = new Scanner(System.in);
+        BigInteger minimumTreasureValue = null;
+        BigInteger maximumTreasureValue = null;
+        int numberOfTreasures = 0;
+        String treasureName = new String();
+        System.out.println();
+        System.out.print("Enter the minimum value to search for: ");
+        try {
+            minimumTreasureValue = scanner.nextBigInteger();
+        } catch (InputMismatchException e) {
+            //... not a Big Integer, then we output an error message "ERROR: Input mismatch, a Big Integer is required."
+            System.out.println("ERROR: Input mismatch, a Big Integer is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the find optimal route menu
+            this.searchByValueRange();
+        }
+        System.out.print("Enter the maximum value to search for: ");
+        try {
+            maximumTreasureValue = scanner.nextBigInteger();
+        } catch (InputMismatchException e) {
+            //... not a Big Integer, then we output an error message "ERROR: Input mismatch, a Big Integer is required."
+            System.out.println("ERROR: Input mismatch, a Big Integer is required.");
+            //... and we show the find optimal route menu
+            this.searchByValueRange();
+        }
+        if (maximumTreasureValue.compareTo(minimumTreasureValue) == -1) {
+            //... the maximum value is smaller than the minimum value, then we output an error message "ERROR: The minimum
+            //value needs to be smaller than the maximum value."
+            System.out.println();
+            System.out.println("ERROR: The minimum value needs to be smaller than the maximum value.");
+            this.searchByValueRange();
+        } else {
+            if (maximumTreasureValue.compareTo(minimumTreasureValue) == 0) {
+                //... the maximum value is equal to the minimum value, then we output an error message "ERROR: The minimum
+                //value needs to be smaller than the maximum value."
+                System.out.println();
+                System.out.println("ERROR: The minimum value needs to be smaller than the maximum value.");
+                this.searchByValueRange();
+            } else {
+                //TODO: Search treasures given a range
+                System.out.println();
+                System.out.println(numberOfTreasures + " treasures were found in this range: ");
+                //TODO:Output treasures
+                this.inventoryMenu();
+            }
         }
     }
     /**
@@ -213,6 +529,7 @@ public class UI {
         int originNodeId = 0;                       //integer to store an identification from the origin node
         ArrayList<Node> result;                     //Array list to store the nodes that compound the result
         //Show a message saying "Enter the origin node's identifier: ".
+        System.out.println();
         System.out.print("Enter the origin node's identifier: ");
         //Store the user input inside originNodeId
         try {
@@ -236,6 +553,7 @@ public class UI {
         } else {
             //...if the node does exist then...
             //Show a message saying "DFS found the following points of interest: ".
+            System.out.println();
             System.out.println("DFS found the following points of interest: ");
             //Leave an empty line.
             System.out.println();
@@ -260,6 +578,7 @@ public class UI {
         int originNodeId = 0;                       //integer to store an identification from the origin node.
         LinkedList<String> result;                  //Linked list to store the strings that compound the result.
         //Show a message saying "Enter the origin node's identifier: ".
+        System.out.println();
         System.out.print("Enter the origin node's identifier: ");
         //Store the user input inside originNodeId
         //Try to scan the user input looking for an integer...
@@ -284,6 +603,7 @@ public class UI {
         } else {
             //...if the node does exist then...
             //Show a message saying "BFS found the following dangerous places: ".
+            System.out.println();
             System.out.println("BFS found the following dangerous places: ");
             //Leave an empty line.
             System.out.println();
@@ -303,6 +623,7 @@ public class UI {
      */
     public void showUniversalNauticalChart () {
         //Show a message saying "Finding the MST...".
+        System.out.println();
         System.out.println("Finding the MST...");
         //Leave an empty line.
         System.out.println();
@@ -325,6 +646,7 @@ public class UI {
         int destinationNodeId = 0;                  //integer to store an identification from the destination node
         Dijkstra dijkstra = new Dijkstra(this.graph);
         List<Node> nodeList = null;
+        System.out.println();
         //Show a message saying "Enter the origin node's identifier: ".
         System.out.print("Enter the origin node's identifier: ");
         //Store the user input inside originNodeId
