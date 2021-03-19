@@ -1,6 +1,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class BTreeReader {
@@ -20,7 +23,7 @@ public class BTreeReader {
         BTNode root = build(scanner.nextLine());
         do{
             BTNode curr = build(scanner.nextLine());
-            root = insert(root, curr);
+            root = add(root, curr);
         }while (scanner.hasNextLine());
         return root;
     }
@@ -31,8 +34,7 @@ public class BTreeReader {
      * @return the node with the name and value filled in
      */
     private static BTNode build(String input){
-        String[] split = new String[2];
-        split = input.split(",");
+        String[] split = input.split(",");
         return new BTNode(split[0], new BigInteger(split[1]));
     }
 
@@ -42,23 +44,98 @@ public class BTreeReader {
      * @param add the child node to be inserted
      * @return the parent node with the child attached
      */
-    private static BTNode insert(BTNode in, BTNode add){
+    public static BTNode add(BTNode in, BTNode add){
         if(add.getValue().compareTo(in.getValue()) >= 0){
             if(in.getrChild() == null){
+                add.setParent(in);
                 in.setrChild(add);
             }
             else{
-                in.setrChild(insert(in.getrChild(), add));
+                in.setrChild(add(in.getrChild(), add));
             }
         }
         else{
             if(in.getlChild() == null){
+                add.setParent(in);
                 in.setlChild(add);
             }
             else{
-                in.setlChild(insert(in.getlChild(),add));
+                in.setlChild(add(in.getlChild(),add));
             }
         }
         return in;
     }
+
+    /**
+     * Method to delete a particular node from the binary tree
+     * @param root the root node of the tree
+     * @param name the name of the node to be deleted
+     * @return the new root of the tree. Will be the same if it wasn't deleted.
+     */
+    public static BTNode delete(BTNode root, String name){
+        Queue<BTNode> check = new LinkedList<>();
+        check.add(root);
+        BTNode curr = root;
+        while(curr.getName().compareTo(name) != 0){
+            if(curr.getlChild() != null){
+                check.add(curr.getlChild());
+            }
+            if(curr.getrChild() != null){
+                check.add(curr.getrChild());
+            }
+            curr = check.poll();
+        }
+        BTNode parent = null;
+        boolean modifyingRoot = false;
+        if(curr.getParent() == null){
+            parent = new BTNode("tmp", (BigInteger.valueOf(-1)));
+            parent.setrChild(curr);
+            modifyingRoot = true;
+        }
+        else{
+            parent = curr.getParent();
+        }
+        if(curr.getrChild() == null && curr.getlChild() == null){
+            if(parent.getlChild() == curr){
+                parent.setlChild(null);
+            }
+            else{
+                parent.setrChild(null);
+            }
+        }
+        else if(curr.getrChild() == null && curr.getlChild() != null){
+            if(parent.getlChild() == curr){
+                parent.setlChild(curr.getlChild());
+            }
+            else{
+                parent.setrChild(curr.getlChild());
+            }
+        }
+        else if(curr.getrChild() != null && curr.getlChild() == null){
+            if(parent.getlChild() == curr){
+                parent.setlChild(curr.getrChild());
+            }
+            else{
+                parent.setrChild(curr.getrChild());
+            }
+        }
+        else if(curr.getrChild() != null && curr.getlChild() != null){
+            BTNode child = curr.getrChild();
+            while(child.getlChild() != null){
+                child = child.getlChild();
+            }
+            if(parent.getlChild() == curr){
+                parent.setlChild(child);
+            }
+            else{
+                parent.setrChild(child);
+            }
+        }
+        if(modifyingRoot){
+            root = parent.getrChild();
+            root.setParent(null);
+        }
+        return root;
+    }
+
 }
