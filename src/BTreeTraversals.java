@@ -39,4 +39,25 @@ public class BTreeTraversals {
     }
 
 
+    /**
+     * This method will fill an ArrayList with the elements of the tree following a postorder search
+     * @param list ArrayList to store all the information of the nodes of the tree following postOrder
+     * @param node the root from where the search will start
+     */
+    public void postOrder(ArrayList<String> list,BTNode node){
+
+        if(node == null){
+            return;
+        }
+
+        postOrder(list,node.getlChild());
+
+        postOrder(list,node.getrChild());
+
+        list.add(node.getName() + " - " + node.getValue() + " doubloons");
+    }
+
+
+
+
 }
