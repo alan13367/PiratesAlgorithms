@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class BTreeTraversals {
 
@@ -55,6 +56,30 @@ public class BTreeTraversals {
         postOrder(list,node.getrChild());
 
         list.add(node.getName() + " - " + node.getValue() + " doubloons");
+    }
+
+    /**
+     * This method will fill an ArrayList with the elements of the tree by Breath Search, or by levels
+     * @param list ArrayList of the elements ordered by Levels
+     * @param node Root of the tree to be searched
+     */
+    public void levels(ArrayList<String> list , BTNode node){
+        LinkedList<BTNode> queue = new LinkedList<>();
+        BTNode current;
+        queue.add(node);
+
+        while(queue.size() != 0){
+            current = queue.poll();
+            list.add(current.getName() + " - " + current.getValue() + " doubloons");
+
+            if(current.getlChild() != null){
+                queue.add(current.getlChild());
+            }
+            if(current.getrChild() != null){
+                queue.add(current.getrChild());
+            }
+        }
+
     }
 
 
