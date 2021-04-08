@@ -289,7 +289,7 @@ public class UI {
             //... and we show the find optimal route menu
             this.addTreasure();
         }
-        //TODO: Add treasure
+        //Treasure addition
         btNode = BTreeReader.add(btNode,new BTNode(treasuresName, treasureValue));
         System.out.println();
         System.out.println("The treasure was correctly added to the loot.");
@@ -311,8 +311,7 @@ public class UI {
             //... and we show the find optimal route menu
             this.removeTreasure();
         }
-        //TODO: Check if treasure exists
-        //TODO: Remove treasure
+        //Treasure deletion
         System.out.println();
         if(BTreeReader.delete(btNode, treasuresName) == null){
             System.out.println("The treasure does not exist");
