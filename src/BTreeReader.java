@@ -82,6 +82,9 @@ public class BTreeReader {
             if(curr.getrChild() != null){
                 check.add(curr.getrChild());
             }
+            if(check.isEmpty()){
+                return null;
+            }
             curr = check.poll();
         }
         BTNode parent = null;

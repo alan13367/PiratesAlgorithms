@@ -265,7 +265,7 @@ public class UI {
     public void addTreasure() {
         Scanner scanner = new Scanner(System.in);
         String treasuresName = new String();
-        BigInteger treasureValue;
+        BigInteger treasureValue = BigInteger.ZERO;
         System.out.println();
         System.out.print("Enter the treasure's name: ");
         try {
@@ -290,6 +290,7 @@ public class UI {
             this.addTreasure();
         }
         //TODO: Add treasure
+        btNode = BTreeReader.add(btNode,new BTNode(treasuresName, treasureValue));
         System.out.println();
         System.out.println("The treasure was correctly added to the loot.");
         this.inventoryMenu();
@@ -313,7 +314,12 @@ public class UI {
         //TODO: Check if treasure exists
         //TODO: Remove treasure
         System.out.println();
-        System.out.println("The treasure was correctly removed from the loot.");
+        if(BTreeReader.delete(btNode, treasuresName) == null){
+            System.out.println("The treasure does not exist");
+        }
+        else {
+            System.out.println("The treasure was correctly removed from the loot.");
+        }
         this.inventoryMenu();
     }
 
