@@ -5,13 +5,16 @@ public class BTreeAVL {
     public static BTNode balance(BTNode root){
         //left rotation if number is positive
         //right rotation if negative
+        root.calcCosts();
         BTNode curr = findNext(root);
-        do{
+        while (curr != null){
             if(curr.getBf() > 0){
                 BTNode child = curr.getrChild();
                 BTNode parent = curr.getParent();
                 curr.setrChild(child.getlChild());
-                curr.getrChild().setParent(curr);
+                if(curr.getrChild() != null) {
+                    curr.getrChild().setParent(curr);
+                }
                 child.setlChild(curr);
                 curr.setParent(child);
                 if(parent == null){
@@ -31,7 +34,9 @@ public class BTreeAVL {
                 BTNode child = curr.getlChild();
                 BTNode parent = curr.getParent();
                 curr.setlChild(child.getrChild());
-                curr.getlChild().setParent(curr);
+                if(curr.getlChild() != null) {
+                    curr.getlChild().setParent(curr);
+                }
                 child.setrChild(curr);
                 curr.setParent(child);
                 if(parent == null){
@@ -50,7 +55,7 @@ public class BTreeAVL {
             root = reRoot(root);
             root.calcCosts();
             curr = findNext(root);
-        }while (curr != null);
+        }
 
         return root;
     }
@@ -63,7 +68,7 @@ public class BTreeAVL {
         while(queue.size() != 0){
             current = queue.poll();
 
-            if(Math.abs(current.getBf()) > 2){
+            if(Math.abs(current.getBf()) >= 2){
                 return current;
             }
             if(current.getlChild() != null){
