@@ -323,6 +323,8 @@ public class UI {
     }
 
     public void listLoot() {
+        BTreeTraversals btraversals = new BTreeTraversals();
+        ArrayList<String> list = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);   //Scanner to get the user input through the System input.
         String traversal = new String();            //String to store the traversal selected.
         //Leave an empty line.
@@ -347,21 +349,37 @@ public class UI {
             if (traversal.toUpperCase().compareTo("I") == 0) {
                 //... I, then do a preorder traversal.
                 //TODO: Preorder traversal
+                btraversals.preOrder(list,this.btNode);
+                for (String element: list){
+                    System.out.println(element);
+                }
                 this.inventoryMenu();
             } else {
                 if (traversal.toUpperCase().compareTo("II") == 0) {
                     //... II, then we do a postorder traversal.
                     //TODO: Postorder traversal
+                    btraversals.postOrder(list,this.btNode);
+                    for (String element: list){
+                        System.out.println(element);
+                    }
                     this.inventoryMenu();
                 } else {
                     if (traversal.toUpperCase().compareTo("III") == 0) {
                         //... III, then we do a inorder traversal.
                         //TODO: Inorder traversal
+                        btraversals.inOrder(list,this.btNode);
+                        for (String element: list){
+                            System.out.println(element);
+                        }
                         this.inventoryMenu();
                     } else {
                         if (traversal.toUpperCase().compareTo("IV") == 0) {
                             //... IV, then do a by level traversal.
                             //TODO: By level traversal
+                            btraversals.levels(list,this.btNode);
+                            for (String element: list){
+                                System.out.println(element);
+                            }
                             this.inventoryMenu();
                         } else {
                             //Leave an empty line.
