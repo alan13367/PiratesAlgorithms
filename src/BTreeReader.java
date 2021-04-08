@@ -24,6 +24,8 @@ public class BTreeReader {
             BTNode curr = build(scanner.nextLine());
             root = add(root, curr);
         }while (scanner.hasNextLine());
+        root.calcCosts();
+        root = BTreeAVL.balance(root);
         return root;
     }
 
@@ -62,6 +64,7 @@ public class BTreeReader {
                 in.setlChild(add(in.getlChild(),add));
             }
         }
+        in.calcCosts();
         return in;
     }
 
