@@ -389,7 +389,7 @@ public class UI {
 
     public void searchByValueExact() {
         Scanner scanner = new Scanner(System.in);
-        BigInteger treasureValue;
+        BigInteger treasureValue = null;
         String treasureName = new String();
         System.out.println();
         System.out.print("Enter the value to search for: ");
@@ -403,10 +403,15 @@ public class UI {
             //... and we show the find optimal route menu
             this.searchByValueExact();
         }
-        //TODO: Search a treasure with the exact value.
         System.out.println();
-        System.out.println("A treasure with this value was found: " + treasureName);
-        this.inventoryMenu();
+        BTNode btNode1 = Search.searchByValueExact(treasureValue, btNode);
+        if (btNode1 == null) {
+            System.out.println("ERROR: Please enter a value that exists.");
+            this.searchByValueExact();
+        } else {
+            System.out.println("A treasure with this value was found: " + btNode1.getName() + " - " + btNode1.getValue() + " doubloons.");
+            this.inventoryMenu();
+        }
     }
 
     public void searchByValueRange() {
@@ -417,6 +422,7 @@ public class UI {
         String treasureName = new String();
         System.out.println();
         System.out.print("Enter the minimum value to search for: ");
+        LinkedList<BTNode> result = new LinkedList<>();
         try {
             minimumTreasureValue = scanner.nextBigInteger();
         } catch (InputMismatchException e) {
@@ -450,11 +456,19 @@ public class UI {
                 System.out.println("ERROR: The minimum value needs to be smaller than the maximum value.");
                 this.searchByValueRange();
             } else {
-                //TODO: Search treasures given a range
                 System.out.println();
-                System.out.println(numberOfTreasures + " treasures were found in this range: ");
-                //TODO:Output treasures
-                this.inventoryMenu();
+                result = Search.searchByValueRange(minimumTreasureValue, maximumTreasureValue, btNode);
+                if (result.isEmpty()) {
+                    System.out.println("ERROR: Please enter a range that exists.");
+                    this.searchByValueRange();
+                } else {
+                    System.out.println(result.size() + " treasures were found in this range: ");
+                    System.out.println();
+                    for (BTNode node : result){
+                        System.out.println(node.getName() + " - " + node.getValue() + " doubloons.");
+                    }
+                    this.inventoryMenu();
+                }
             }
         }
     }
