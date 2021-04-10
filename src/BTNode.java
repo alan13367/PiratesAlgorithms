@@ -4,6 +4,8 @@ public class BTNode {
 
     private String name;
     private BigInteger value;
+    private int bf;
+    private int height;
     private BTNode parent;
     private BTNode lChild;
     private BTNode rChild;
@@ -19,6 +21,8 @@ public class BTNode {
         this.lChild = null;
         this.rChild = null;
         this.parent = null;
+        this.bf = 0;
+        this.height = 0;
     }
 
     /**
@@ -75,6 +79,67 @@ public class BTNode {
      */
     public void setlChild(BTNode lChild) {
         this.lChild = lChild;
+    }
+
+    /**
+     * Getter for the balance factor
+     * @return the balance factor
+     */
+    public int getBf() {
+        return bf;
+    }
+
+    /**
+     * Setter to hardcode the balance factor
+     * @param bf the balance factor desired
+     */
+    public void setBf(int bf) {
+        this.bf = bf;
+    }
+
+    /**
+     * Getter for the height of the Node
+     * @return the height of the node on the tree
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * Setter for the height of the node
+     * @param height of the node
+     */
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void calcCosts(){
+        if(this.rChild == null && this.lChild == null){
+            this.height = 1;
+            this.bf = 0;
+        }
+        else if(this.rChild != null && this.lChild == null){
+            this.rChild.calcCosts();
+            this.height = this.rChild.height + 1;
+            this.bf = this.rChild.height;
+        }
+        else if(this.rChild == null){
+            this.lChild.calcCosts();
+            this.height = this.lChild.height + 1;
+            this.bf = -this.lChild.height;
+        }
+        else{
+            this.rChild.calcCosts();
+            this.lChild.calcCosts();
+            if(this.rChild.height >= this.lChild.height){
+                this.height = this.rChild.height + 1;
+            }
+            else{
+                this.height = this.lChild.height + 1;
+            }
+            this.bf = this.rChild.height - this.lChild.height;
+        }
+
     }
 
     /**

@@ -24,6 +24,8 @@ public class BTreeReader {
             BTNode curr = build(scanner.nextLine());
             root = add(root, curr);
         }while (scanner.hasNextLine());
+
+        //int max = BTreeAVL.max(root);
         return root;
     }
 
@@ -62,7 +64,8 @@ public class BTreeReader {
                 in.setlChild(add(in.getlChild(),add));
             }
         }
-        return in;
+
+        return BTreeAVL.balance(in);
     }
 
     /**
@@ -133,10 +136,12 @@ public class BTreeReader {
                 parent.setrChild(child);
             }
         }
+        parent = BTreeAVL.balance(parent);
         if(modifyingRoot){
             root = parent.getrChild();
             root.setParent(null);
         }
+        return BTreeAVL.balance(root);
         else{
             try {
                 parent.getlChild().setParent(parent);
