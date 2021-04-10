@@ -137,6 +137,13 @@ public class BTreeReader {
             root = parent.getrChild();
             root.setParent(null);
         }
+        else{
+            try {
+                parent.getlChild().setParent(parent);
+                parent.getrChild().setParent(parent);
+            }
+            catch (NullPointerException ignored){}
+        }
         return root;
     }
 
