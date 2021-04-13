@@ -25,7 +25,7 @@ public class BTreeReader {
             root = add(root, curr);
         }while (scanner.hasNextLine());
 
-        //int max = BTreeAVL.max(root);
+        int max = BTreeAVL.max(root);
         return root;
     }
 
@@ -90,66 +90,79 @@ public class BTreeReader {
             }
             curr = check.poll();
         }
-        BTNode parent = null;
-        boolean modifyingRoot = false;
-        if(curr.getParent() == null){
-            parent = new BTNode("tmp", (BigInteger.valueOf(-1)));
-            parent.setrChild(curr);
-            modifyingRoot = true;
-        }
-        else{
-            parent = curr.getParent();
-        }
-        if(curr.getrChild() == null && curr.getlChild() == null){
-            if(parent.getlChild() == curr){
-                parent.setlChild(null);
-            }
-            else{
-                parent.setrChild(null);
-            }
-        }
-        else if(curr.getrChild() == null && curr.getlChild() != null){
-            if(parent.getlChild() == curr){
-                parent.setlChild(curr.getlChild());
-            }
-            else{
-                parent.setrChild(curr.getlChild());
-            }
-        }
-        else if(curr.getrChild() != null && curr.getlChild() == null){
-            if(parent.getlChild() == curr){
-                parent.setlChild(curr.getrChild());
-            }
-            else{
-                parent.setrChild(curr.getrChild());
-            }
-        }
-        else if(curr.getrChild() != null && curr.getlChild() != null){
-            BTNode child = curr.getrChild();
-            while(child.getlChild() != null){
-                child = child.getlChild();
-            }
-            if(parent.getlChild() == curr){
-                parent.setlChild(child);
-            }
-            else{
-                parent.setrChild(child);
-            }
-        }
-        parent = BTreeAVL.balance(parent);
-        if(modifyingRoot){
-            root = parent.getrChild();
-            root.setParent(null);
-        }
-        return BTreeAVL.balance(root);
-        else{
-            try {
-                parent.getlChild().setParent(parent);
-                parent.getrChild().setParent(parent);
-            }
-            catch (NullPointerException ignored){}
-        }
+        curr = del(root, curr.getValue());
         return root;
+    }
+
+    private static BTNode del(BTNode node, BigInteger key){
+        if(node == null){
+            return null;
+        }
+        else if(node.getValue().compareTo(key) > 0){
+            //BTNode tmp = del(node.getlChild(), key);
+            //tmp.setParent(node);
+            //node.setlChild(tmp);
+            node = del(node.getlChild(), key);
+        }
+        else if(node.getValue().compareTo(key) < 0){
+            //BTNode tmp = del(node.getrChild(), key);
+            //tmp.setParent(node);
+            //node.setrChild(tmp);
+            node = del(node.getrChild(), key);
+        }
+        else{
+            if(node.getlChild() == null && node.getrChild() == null){
+                BTNode parent = node.getParent();
+                if(parent.getrChild() == node){
+                    parent.setrChild(null);
+                }
+                else{
+                    parent.setlChild(null);
+                }
+                node = parent;
+            } else if(node.getlChild() == null || node.getrChild() == null){
+                BTNode tmp = node.getParent();
+                node = (node.getlChild() == null) ? node.getrChild() : node.getlChild();
+                node.setParent(tmp);
+            }
+            else{
+                BTNode lmc = getFurthestLeft(node.getrChild());
+                BTNode tmp = node.getParent();
+                BTNode parent = lmc.getParent();
+                lmc.setParent(tmp);
+                lmc.setlChild(node.getlChild());
+                lmc.getlChild().setParent(lmc);
+                if(node.getrChild() == lmc){
+                    lmc.setrChild(null);
+                }else {
+                    if (lmc.getrChild() != null) {
+                        BTNode child = lmc.getrChild();
+                        parent.setlChild(child);
+                        child.setParent(parent);
+                    }
+                    lmc.setrChild(node.getrChild());
+                    lmc.getrChild().setParent(lmc);
+                }
+                if(tmp != null) {
+                    if (tmp.getrChild() == node) {
+                        tmp.setrChild(lmc);
+                    } else {
+                        tmp.setlChild(lmc);
+                    }
+                }
+                node = lmc;
+            }
+        }
+        return BTreeAVL.balance(node);
+    }
+
+    private static BTNode getFurthestLeft(BTNode node){
+        if(node.getlChild() == null){
+            return node;
+        }
+        else{
+            return getFurthestLeft(node.getlChild());
+        }
     }
 
 }

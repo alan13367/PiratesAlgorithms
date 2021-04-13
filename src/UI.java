@@ -313,12 +313,15 @@ public class UI {
         }
         //Treasure deletion
         System.out.println();
-        if(BTreeReader.delete(btNode, treasuresName) == null){
+        BTNode tmp = BTreeReader.delete(btNode, treasuresName);
+        if(tmp == null){
             System.out.println("The treasure does not exist");
         }
         else {
             System.out.println("The treasure was correctly removed from the loot.");
+            btNode = tmp;
         }
+        //int max = BTreeAVL.max(btNode);
         this.inventoryMenu();
     }
 
