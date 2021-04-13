@@ -90,10 +90,21 @@ public class BTreeReader {
             }
             curr = check.poll();
         }
-        curr = del(root, curr.getValue());
+        if(curr == root){
+            root = del(root, curr.getValue());
+        }
+        else {
+            curr = del(root, curr.getValue());
+        }
         return root;
     }
 
+    /**
+     * Recursive function which gets called until it finds the right node to delete specified by the code
+     * @param node the node that must be looked at
+     * @param key the value of the node you want to delete
+     * @return the new balanced node
+     */
     private static BTNode del(BTNode node, BigInteger key){
         if(node == null){
             return null;
@@ -140,6 +151,9 @@ public class BTreeReader {
                         parent.setlChild(child);
                         child.setParent(parent);
                     }
+                    else{
+                        parent.setlChild(null);
+                    }
                     lmc.setrChild(node.getrChild());
                     lmc.getrChild().setParent(lmc);
                 }
@@ -156,6 +170,11 @@ public class BTreeReader {
         return BTreeAVL.balance(node);
     }
 
+    /**
+     * Gets the node to the furthest left from the node provided
+     * @param node the root node where we want to start the search
+     * @return the node which has no left child
+     */
     private static BTNode getFurthestLeft(BTNode node){
         if(node.getlChild() == null){
             return node;
