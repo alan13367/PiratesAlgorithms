@@ -320,6 +320,7 @@ public class UI {
         else {
             System.out.println("The treasure was correctly removed from the loot.");
             btNode = tmp;
+
         }
         //int max = BTreeAVL.max(btNode);
         this.inventoryMenu();
