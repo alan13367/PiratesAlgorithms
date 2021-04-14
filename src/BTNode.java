@@ -113,6 +113,9 @@ public class BTNode {
         this.height = height;
     }
 
+    /**
+     * It calculates the costs of the height and inbalance value, for every node, starting from the one u provide
+      */
     public void calcCosts(){
         if(this.rChild == null && this.lChild == null){
             this.height = 1;

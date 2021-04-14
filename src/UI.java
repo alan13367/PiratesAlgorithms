@@ -296,6 +296,9 @@ public class UI {
         this.inventoryMenu();
     }
 
+    /**
+     * Removes a treasure from the loot.
+     */
     public void removeTreasure() {
         Scanner scanner = new Scanner(System.in);
         String treasuresName = new String();
@@ -326,6 +329,13 @@ public class UI {
         this.inventoryMenu();
     }
 
+    /**
+     * Lists the loot following a specific order:
+     * I. Preorder
+     * II. Postorder
+     * III. Inorder
+     * IV. By level
+     */
     public void listLoot() {
         BTreeTraversals btraversals = new BTreeTraversals();
         ArrayList<String> list = new ArrayList<>();
@@ -352,7 +362,6 @@ public class UI {
             //If the traversal selected is...
             if (traversal.toUpperCase().compareTo("I") == 0) {
                 //... I, then do a preorder traversal.
-                //TODO: Preorder traversal
                 btraversals.preOrder(list,this.btNode);
                 for (String element: list){
                     System.out.println(element);
@@ -361,7 +370,6 @@ public class UI {
             } else {
                 if (traversal.toUpperCase().compareTo("II") == 0) {
                     //... II, then we do a postorder traversal.
-                    //TODO: Postorder traversal
                     btraversals.postOrder(list,this.btNode);
                     for (String element: list){
                         System.out.println(element);
@@ -370,7 +378,6 @@ public class UI {
                 } else {
                     if (traversal.toUpperCase().compareTo("III") == 0) {
                         //... III, then we do a inorder traversal.
-                        //TODO: Inorder traversal
                         btraversals.inOrder(list,this.btNode);
                         for (String element: list){
                             System.out.println(element);
@@ -379,7 +386,6 @@ public class UI {
                     } else {
                         if (traversal.toUpperCase().compareTo("IV") == 0) {
                             //... IV, then do a by level traversal.
-                            //TODO: By level traversal
                             btraversals.levels(list,this.btNode);
                             for (String element: list){
                                 System.out.println(element);
@@ -408,6 +414,9 @@ public class UI {
         }
     }
 
+    /**
+     * Searches for a treasure given an exact value.
+     */
     public void searchByValueExact() {
         Scanner scanner = new Scanner(System.in);
         BigInteger treasureValue = null;
@@ -435,6 +444,9 @@ public class UI {
         }
     }
 
+    /**
+     * Searches for n numbers of treasures given a range of values.
+     */
     public void searchByValueRange() {
         Scanner scanner = new Scanner(System.in);
         BigInteger minimumTreasureValue = null;
