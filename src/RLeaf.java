@@ -10,6 +10,12 @@ public class RLeaf implements RNode{
         this.parent = null;
     }
 
+    public RLeaf(String data){
+        String[] split = data.split(",");
+        this.name = split[0];
+        this.pos = new Vec2(Float.parseFloat(split[1]), Float.parseFloat(split[2]));
+    }
+
     public String getName() {
         return name;
     }
