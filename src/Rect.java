@@ -9,6 +9,9 @@ public class Rect implements RNode{
     private Rect parent;
     private ArrayList<RNode> children;
 
+    /**
+     * Empty constructor to initialize Array lists and set variables to default
+     */
     public Rect() {
         this.parent = null;
         this.bounds = new Vec2[2];
@@ -16,37 +19,66 @@ public class Rect implements RNode{
         this.children = new ArrayList<>();
     }
 
+    /**
+     * Gets the center point of the rectangle
+     * @return a vec2 object containing the center coordinates
+     */
     public Vec2 getCentre() {
         return centre;
     }
 
+    /**
+     * Gets the bound points of the rectangle
+     * @return an array holding the bottom left point on the first position and top right on the second position
+     */
     public Vec2[] getBounds() {
         return bounds;
     }
 
+    /**
+     * Override of interface method to get the parent
+     * @return the parent rectangle
+     */
     @Override
     public Rect getParent() {
         return parent;
     }
 
+    /**
+     * Gets the children of the current rectangle
+     * @return the children of the current node as an array
+     */
     public ArrayList<RNode> getChildren() {
         return children;
     }
 
+    /**
+     * Sets the provided parent as the parent of the rectangle
+      * @param parent the parent which the rectangle is meant to have
+     */
     @Override
     public void setParent(Rect parent) {
         this.parent = parent;
     }
 
+    /**
+     * Re calculates the bounds of the rectangle according to its children
+     */
     public void reBalance(){
         calcBounds();
         calcCentre();
     }
 
+    /**
+     * Calculates the centre position of the rectangle
+     */
     public void calcCentre(){
         this.centre = new Vec2((bounds[0].x + bounds[1].x)/2.0f,(bounds[0].y + bounds[1].y)/2.0f);
     }
 
+    /**
+     * Calculates the bound points of the rectangle
+     */
     public void calcBounds(){
         float minX = Float.MAX_VALUE, minY = Float.MAX_VALUE;
         float maxX = Float.MIN_VALUE, maxY = Float.MIN_VALUE;
@@ -94,6 +126,10 @@ public class Rect implements RNode{
 
     }
 
+    /**
+     * Method which inserts a leaf node into the rectangle
+     * @param in the leaf node to be inserted
+     */
     public void insert(RLeaf in){
         if(children.isEmpty()){
             children.add(in);
@@ -147,6 +183,11 @@ public class Rect implements RNode{
         }
     }
 
+    /**
+     * Generates rectangles which would fit the leaf nodes provided
+     * @param input an array list of points which the rectangles will have to accommodate
+     * @return an array list of rectangles with all the points in input sorted
+     */
     private ArrayList<RNode> genRects(ArrayList<RLeaf> input){
         ArrayList<RNode> output = new ArrayList<>();
         output.add(new Rect());

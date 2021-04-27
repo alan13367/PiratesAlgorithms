@@ -5,6 +5,12 @@ import java.util.Scanner;
 public class RTreeReader {
     private static final String basepath = "RTrees/";
 
+    /**
+     * static method to read file at provided path and output a root node
+     * @param path the name of the file within "RTrees/" directory
+     * @return a Rect class which represents the the whole graph
+     * @throws FileNotFoundException if the file is not found
+     */
     public static Rect reader(String path) throws FileNotFoundException {
         File file = new File(basepath + path);
         Scanner scanner = new Scanner(file);
