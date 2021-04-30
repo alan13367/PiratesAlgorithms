@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Rect implements RNode{
 
     public static final int MAX_CHILDREN = 3;
-    public static final int MIN_CHILDREN = 1;
+    public static final int MIN_CHILDREN = 2;
 
     private Vec2 centre;
     private Vec2[] bounds;
@@ -233,53 +233,74 @@ public class Rect implements RNode{
         if(target == null){
             return 1;
         }
-
+        this.children = del(target);
         return 0;
     }
 
-    private void del(RLeaf target){
-        if(this.children.isEmpty()){
-            return;
-        }
-
+    private ArrayList<RNode> del(RLeaf target){
         if(this.children.get(0).getClass() == RLeaf.class){
-            for (RNode curr: children){
-                RLeaf node = (RLeaf) curr;
-                if(node.getPos().equal(target.getPos())){
+            for (RNode node : this.children){
+                RLeaf curr = (RLeaf) node;
+                if(curr.getPos().equal(target.getPos())){
                     this.children.remove(node);
-                    //TODO re-balance rectangles if needed send an email IMPORTANT
-                    if(this.children.size() <= MIN_CHILDREN){
-                        ArrayList<RLeaf> reInsert = new ArrayList<>();
-                        Rect currentRect = this;
-                        boolean stop = false;
-                        for (RNode now : children) {
-                            reInsert.add((RLeaf) now);
-                        }
-                        while(!stop) {
-                            Rect parent = currentRect.parent;
-                            parent.getChildren().remove(currentRect);
-                            if(parent.getChildren().size() <= MIN_CHILDREN){
-                                //TODO DONT LIKE THIS SOLUTION
-                            }
-                            else{
-                                stop = true;
-                            }
-                        }
-                    }
+                    break;
                 }
             }
         }
         else{
-            float minDistance = Float.MAX_VALUE;
             int index = -1;
+            float minDistance = Float.MAX_VALUE;
             for (int i = 0; i < this.children.size(); i++) {
-                Rect curr = (Rect) this.children.get(i);
-                if(target.getPos().findDistance(curr.getCentre()) < minDistance){
+                float currDistance = ((Rect) this.children.get(i)).getCentre().findDistance(target.getPos());
+                if(currDistance < minDistance){
+                    minDistance = currDistance;
                     index = i;
                 }
             }
-            ((Rect) this.children.get(index)).del(target);
+            this.children = ((Rect)this.children.get(index)).del(target);
         }
+        Rect parent = this.parent;
+        if(parent == null){
+            return this.children;
+        }
+        if(this.children.size() < MIN_CHILDREN){
+            parent.children.remove(this);
+            if(parent.children.size() >= MIN_CHILDREN){
+                for(RNode node : this.children){
+                    parent.insert((RLeaf) node);
+                }
+            }
+            else{
+                ArrayList<RLeaf> reInsert = new ArrayList<>();
+                for (RNode node : this.children){
+                    reInsert.add((RLeaf) node);
+                }
+                for(RNode node : parent.children){
+                    Rect curr = (Rect) node;
+                    reInsert.addAll(breakRect(curr));
+                }
+                for(RLeaf node : reInsert){
+                    parent.insert(node);
+                }
+            }
+        }
+        return parent.children;
+    }
+
+    private ArrayList<RLeaf> breakRect(Rect top){
+        ArrayList<RLeaf> out = new ArrayList<>();
+        if(top.children.get(0).getClass() == RLeaf.class){
+            for(RNode node : top.children){
+                out.add((RLeaf) node);
+            }
+        }
+        else{
+            for (RNode node : top.children){
+                Rect curr = (Rect) node;
+                out.addAll(breakRect(curr));
+            }
+        }
+        return out;
     }
 
     private RLeaf find(String name){
