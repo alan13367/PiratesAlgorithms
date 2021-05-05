@@ -108,6 +108,55 @@ public class UI {
             this.datasetTrees();
         }
         //Call the starting menu.
+        this.datasetRTrees();
+    }
+
+    /**
+     * Choose a dataset:
+     * L) r-treeL.paed
+     * M) r-treeM.paed
+     * S) r-treeS.paed
+     * XL) r-treeXL.paed
+     * XS) r-treeXS.paed
+     * XXL) r-treeXXL.paed
+     * XXS) r-treeXXS.paed
+     */
+    public void datasetRTrees() {
+        Scanner scanner = new Scanner(System.in);
+        String dataset;
+        //Leave an empty line.
+        System.out.println();
+        System.out.println("L) r-treeL.paed");
+        System.out.println("M) r-treeM.paed");
+        System.out.println("S) r-treeS.paed");
+        System.out.println("XL) r-treeXL.paed");
+        System.out.println("XS) r-treeXS.paed");
+        System.out.println("XXL) r-treeXXL.paed");
+        System.out.println("XXS) r-treeXXS.paed");
+        //Leave an empty line.
+        System.out.println();
+        //Show a message saying "Choose an option: ".
+        System.out.print("Choose a dataset: ");
+        try {
+            //Get the dataset selected.
+            dataset = scanner.nextLine();
+            //If the dataset selected is...
+            //TODO: Read the r-tree
+            //this.btNode = BTreeReader.reader("tree"+ dataset.toUpperCase() +".paed");
+        }
+        catch (InputMismatchException e) {
+            //... not a string, then we output an error message "ERROR: Input mismatch, a string is required."
+            System.out.println("ERROR: Input mismatch, a string is required.");
+            //... and we show the starting menu again
+            this.datasetRTrees();
+        }
+        catch (FileNotFoundException e) {
+            //... not a correct file, then we output an error message "ERROR: File not found, please enter a valid dataset."
+            System.out.println("ERROR: File not found, please enter a valid dataset.");
+            //... and we show the starting menu again
+            this.datasetRTrees();
+        }
+        //Call the starting menu.
         this.startMenu();
     }
 
@@ -156,7 +205,7 @@ public class UI {
                     this.inventoryMenu();
                     break;
                 case 3:
-                    //TODO: 3. Deck (R trees)
+                    this.deckMenu();
                     break;
                 case 4:
                     //TODO: 4. Crew (Tables)
@@ -186,6 +235,287 @@ public class UI {
             //... and we show the starting menu again
             this.startMenu();
         }
+    }
+
+    /**Show a menu where the user chooses how to manage the deck. It gives the next range of functionalities to
+     * choose from:
+     *  A. Add treasure
+     *  B. Remove treasure
+     *  C. Visualize
+     *  D. Search by area
+     *  E. Search by proximity
+     *
+     *  F. Go back
+     *
+     *What functionality do you want to run?
+     */
+    public void deckMenu() {
+        Scanner scanner = new Scanner(System.in);   //Scanner to get the user input through the System input.
+        char functionality;                     //character to store the functionality selected.
+        //Leave an empty line.
+        System.out.println();
+        //Show a message saying "    A. Add treasure".
+        System.out.println("    A. Add treasure");
+        //Show a message saying "    B. Find dangerous places (BFS)".
+        System.out.println("    B. Remove treasure");
+        //Show a message saying "    C. Visualize".
+        System.out.println("    C. Visualize");
+        //Show a message saying "    D. Search by area".
+        System.out.println("    D. Search by area");
+        //Show a message saying "    E. Search by proximity".
+        System.out.println("    E. Search by proximity");
+        //Leave an empty line.
+        System.out.println();
+        //Show a message saying "    F. Go back".
+        System.out.println("    F. Go back");
+        //Leave an empty line.
+        System.out.println();
+        //Show a message saying "What functionality do you want to run? ".
+        System.out.print("What functionality do you want to run? ");
+        //Try to scan the user input looking for a character...
+        try {
+            //Get the character selected and transform it to uppercase given a String.
+            functionality = Character.toUpperCase(scanner.nextLine().charAt(0));
+            //If the functionality selected is...
+            //... A, then we give the user a menu to add a treasure.
+            //... B, then we give the user a menu to remove a treasure.
+            //... C, then we show the user a visualize the deck.
+            //... D, then we give the user a list of treasures given an area.
+            //... E, then we give the user a list of treasures given a proximity.
+            //... F, then we go back to the starting menu.
+            //... not a character value between A and F, then we output an error message "ERROR: Functionality.
+            //must be a character value (A-F)"
+            //Leave an empty line.
+            //... and we show the routes menu again
+            switch (functionality) {
+                case 'A' -> this.addRTreasure();
+                case 'B' -> this.removeRTreasure();
+                case 'C' -> this.visualize();
+                case 'D' -> this.searchByArea();
+                case 'E' -> this.searchByProximity();
+                case 'F' -> this.startMenu();
+                default -> {
+                    System.out.println("ERROR: Functionality must be a character value (A-F)");
+                    System.out.println();
+                    this.deckMenu();
+                }
+            }
+            //... if that is not the case, we catch the exception.
+        } catch (InputMismatchException e) {
+            //... not a character, then we output an error message "ERROR: Input mismatch, a character is required."
+            System.out.println("ERROR: Input mismatch, a character is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the routes menu again
+            this.deckMenu();
+        }
+    }
+    /**
+     * Allows the user to add a new treasure to the r-tree, given a treasure name, x-coordinate and y-coordinate.
+     */
+    public void addRTreasure() {
+        Scanner scanner = new Scanner(System.in);
+        String treasuresName = new String();
+        float x = 0.0f;
+        float y = 0.0f;
+        System.out.println();
+        System.out.println("Enter the treasure's name: ");
+        try {
+            treasuresName = scanner.nextLine();
+        } catch (InputMismatchException e) {
+            //... not a String, then we output an error message "ERROR: Input mismatch, a String is required."
+            System.out.println("ERROR: Input mismatch, a String is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the add r-treasure menu
+            this.addRTreasure();
+        }
+        System.out.print("Enter the X coordinate of the treasure's position: ");
+        try {
+            x = scanner.nextFloat();
+        } catch (InputMismatchException e) {
+            //... not a float, then we output an error message "ERROR: Input mismatch, a float is required."
+            System.out.println("ERROR: Input mismatch, a float is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the add r-treasure menu
+            this.addRTreasure();
+        }
+        System.out.print("Enter the Y coordinate of the treasure's position: ");
+        try {
+            y = scanner.nextFloat();
+        } catch (InputMismatchException e) {
+            //... not a float, then we output an error message "ERROR: Input mismatch, a float is required."
+            System.out.println("ERROR: Input mismatch, a float is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the add r-treasure menu
+            this.addRTreasure();
+        }
+        //Treasure addition
+        //TODO: R-treasure addition
+        System.out.println();
+        System.out.println("The treasure was correctly added to the deck.");
+        this.deckMenu();
+    }
+
+    /**
+     * Removes a treasure from the deck.
+     */
+    public void removeRTreasure(){
+        Scanner scanner = new Scanner(System.in);
+        String treasuresName = new String();
+        System.out.println();
+        System.out.println("Enter the treasure's name: ");
+        try {
+            treasuresName = scanner.nextLine();
+        } catch (InputMismatchException e) {
+            //... not a String, then we output an error message "ERROR: Input mismatch, a String is required."
+            System.out.println("ERROR: Input mismatch, a String is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the add r-treasure menu
+            this.removeRTreasure();
+        }
+        //Treasure remove
+        //TODO: R-treasure remove
+        System.out.println();
+        System.out.println("The treasure was correctly removed from the deck.");
+        this.deckMenu();
+    }
+
+    /**
+     * Visualize the deck representation
+     */
+    public void visualize(){
+        System.out.println();
+        System.out.println("Generating the deck representation...");
+        //Visualize
+        //TODO: ALAN PUT YOUR SHIT HERE
+        this.deckMenu();
+    }
+
+    /**
+     * Search the treasures inside an area
+     */
+    public void searchByArea(){
+        Scanner scanner = new Scanner(System.in);
+        String firstPoint = new String();
+        String secondPoint = new String();
+        String[] xAndY1;
+        String[] xAndY2;
+        float x1 = 0.0f;
+        float y1 = 0.0f;
+        float x2 = 0.0f;
+        float y2 = 0.0f;
+        int number = 0;
+        System.out.println();
+        System.out.println("Enter the rectangle's first point (X,Y): ");
+        try {
+            firstPoint = scanner.nextLine();
+            firstPoint.replace(" ", "");
+            xAndY1 = firstPoint.split(",");
+            if (xAndY1.length == 2) {
+                x1 = Float.parseFloat(xAndY1[0]);
+                y1 = Float.parseFloat(xAndY1[1]);
+            } else {
+                System.out.println("ERROR: Incorrect format, please enter %f,%f");
+                //Leave an empty line.
+                System.out.println();
+                //... and we show the add r-treasure menu
+                this.searchByArea();
+            }
+        } catch (InputMismatchException e) {
+            //... not a String, then we output an error message "ERROR: Input mismatch, a String is required."
+            System.out.println("ERROR: Input mismatch, a String is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the add search by area menu
+            this.searchByArea();
+        }
+        System.out.println("Enter the rectangle's second point (X,Y): ");
+        try {
+            secondPoint = scanner.nextLine();
+            secondPoint.replace(" ", "");
+            xAndY2 = secondPoint.split(",");
+            if (xAndY2.length == 2) {
+                x2 = Float.parseFloat(xAndY2[0]);
+                y2 = Float.parseFloat(xAndY2[1]);
+            } else {
+                System.out.println("ERROR: Incorrect format, please enter %f,%f");
+                //Leave an empty line.
+                System.out.println();
+                //... and we show the add r-treasure menu
+                this.searchByArea();
+            }
+        } catch (InputMismatchException e) {
+            //... not a String, then we output an error message "ERROR: Input mismatch, a String is required."
+            System.out.println("ERROR: Input mismatch, a String is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the add search by area menu
+            this.searchByArea();
+        }
+        //Treasure remove
+        //TODO: R-treasure search by area
+        System.out.println();
+        System.out.println(number + " treasures were found in this area:");
+        //TODO: printing of the treasures
+        this.deckMenu();
+    }
+
+    /**
+     * Search x number of treasures near a point given its proximity.
+     */
+    public void searchByProximity () {
+        Scanner scanner = new Scanner(System.in);
+        int number = 0;
+        String point = new String();
+        String[] xAndY;
+        float x = 0.0f;
+        float y = 0.0f;
+
+        System.out.println();
+        System.out.println("Enter the number of treasures to find: ");
+        try {
+            number = scanner.nextInt();
+        } catch (InputMismatchException e) {
+            //... not a integer, then we output an error message "ERROR: Input mismatch, an integer is required."
+            System.out.println("ERROR: Input mismatch, an integer is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the add search by area menu
+            this.searchByProximity();
+        }
+        System.out.println("Enter the point to search around (X,Y): ");
+        try {
+            point = scanner.nextLine();
+            point.replace(" ", "");
+            xAndY = point.split(",");
+            if (xAndY.length == 2) {
+                x = Float.parseFloat(xAndY[0]);
+                y = Float.parseFloat(xAndY[1]);
+            } else {
+                System.out.println("ERROR: Incorrect format, please enter %f,%f");
+                //Leave an empty line.
+                System.out.println();
+                //... and we show the add r-treasure menu
+                this.searchByProximity();
+            }
+        } catch (InputMismatchException e) {
+            //... not a String, then we output an error message "ERROR: Input mismatch, a String is required."
+            System.out.println("ERROR: Input mismatch, a String is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the add search by area menu
+            this.searchByProximity();
+        }
+
+        //TODO: R-treasure search by proximity
+        System.out.println();
+        System.out.println("The " + number + " nearest treasures to this point are:");
+        //TODO: printing of the treasures
+        this.deckMenu();
     }
     /**
      * Show a menu where the user chooses how to manage the loot. It gives the next range of functionalities to
