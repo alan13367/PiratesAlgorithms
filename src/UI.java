@@ -3,8 +3,18 @@ import java.math.BigInteger;
 import java.util.*;
 
 public class UI {
+    /**
+     * Graph to store the graph dataset selected.
+     */
     private Graph graph;
+    /**
+     * Object reference to the root of the binary tree to store the dataset selected.
+     */
     private BTNode btNode;
+    /**
+     * R-Tree to store the r-tree dataset selected
+     */
+    private Rect rect;
     /**
      * UI starting message
      */
@@ -135,26 +145,73 @@ public class UI {
         System.out.println("XXS) r-treeXXS.paed");
         //Leave an empty line.
         System.out.println();
-        //Show a message saying "Choose an option: ".
+        //Show a message saying "Choose a dataset: ".
         System.out.print("Choose a dataset: ");
         try {
             //Get the dataset selected.
             dataset = scanner.nextLine();
             //If the dataset selected is...
-            //TODO: Read the r-tree
-            //this.btNode = BTreeReader.reader("tree"+ dataset.toUpperCase() +".paed");
+            this.rect =  RTreeReader.reader("r-tree" + dataset.toUpperCase() + ".paed");
         }
         catch (InputMismatchException e) {
             //... not a string, then we output an error message "ERROR: Input mismatch, a string is required."
             System.out.println("ERROR: Input mismatch, a string is required.");
-            //... and we show the starting menu again
+            //... and we show the dataset r-tree menu again
             this.datasetRTrees();
         }
         catch (FileNotFoundException e) {
             //... not a correct file, then we output an error message "ERROR: File not found, please enter a valid dataset."
             System.out.println("ERROR: File not found, please enter a valid dataset.");
-            //... and we show the starting menu again
+            //... and we show the dataset r-tree menu again
             this.datasetRTrees();
+        }
+        //Call the starting menu.
+        this.datasetTables();
+    }
+
+    /**
+     * Choose a dataset:
+     * L) tablesL.paed
+     * M) tablesM.paed
+     * S) tablesS.paed
+     * XL) tablesXL.paed
+     * XS) tablesXS.paed
+     * XXL) tablesXXL.paed
+     * XXS) tablesXXS.paed
+     */
+    public void datasetTables() {
+        Scanner scanner = new Scanner(System.in);
+        String dataset;
+        //Leave an empty line.
+        System.out.println();
+        System.out.println("L) tablesL.paed");
+        System.out.println("M) tablesM.paed");
+        System.out.println("S) tablesS.paed");
+        System.out.println("XL) tablesXL.paed");
+        System.out.println("XS) tablesXS.paed");
+        System.out.println("XXL) tablesXXL.paed");
+        System.out.println("XXS) tablesXXS.paed");
+        //Leave an empty line.
+        System.out.println();
+        //Show a message saying "Choose a dataset: ".
+        System.out.print("Choose a dataset: ");
+        try {
+            //Get the dataset selected.
+            dataset = scanner.nextLine();
+            //If the dataset selected is...
+            //TODO: Tables reading
+        }
+        catch (InputMismatchException e) {
+            //... not a string, then we output an error message "ERROR: Input mismatch, a string is required."
+            System.out.println("ERROR: Input mismatch, a string is required.");
+            //... and we show the dataset table menu again
+            this.datasetTables();
+        }
+        catch (FileNotFoundException e) {
+            //... not a correct file, then we output an error message "ERROR: File not found, please enter a valid dataset."
+            System.out.println("ERROR: File not found, please enter a valid dataset.");
+            //... and we show the dataset table menu again
+            this.datasetTables();
         }
         //Call the starting menu.
         this.startMenu();
@@ -208,7 +265,7 @@ public class UI {
                     this.deckMenu();
                     break;
                 case 4:
-                    //TODO: 4. Crew (Tables)
+                    this.crewMenu();
                     break;
                 case 5:
                     System.out.println("So long, comrade! ⛵");
@@ -235,6 +292,205 @@ public class UI {
             //... and we show the starting menu again
             this.startMenu();
         }
+    }
+
+    /**
+     * Show a menu where the user chooses how to manage the pirates. It gives the next range of functionalities to
+     * choose from:
+     *  A. Add pirate
+     *  B. Remove pirate
+     *  C. Show pirate
+     *  D. Age histogram
+     *
+     *  E. Go back
+     *
+     *What functionality do you want to run?
+     *
+     */
+    public void crewMenu() {
+        Scanner scanner = new Scanner(System.in);   //Scanner to get the user input through the System input.
+        char functionality;                     //character to store the functionality selected.
+        //Leave an empty line.
+        System.out.println();
+        //Show a message saying "    A. Add pirate".
+        System.out.println("    A. Add pirate");
+        //Show a message saying "    B. Remove pirate".
+        System.out.println("    B. Remove pirate");
+        //Show a message saying "    C. Show pirate".
+        System.out.println("    C. Show pirate");
+        //Show a message saying "    D. Age histogram".
+        System.out.println("    D. Age histogram");
+        //Leave an empty line.
+        System.out.println();
+        //Show a message saying "    E. Go back".
+        System.out.println("    E. Go back");
+        //Leave an empty line.
+        System.out.println();
+        //Show a message saying "What functionality do you want to run? ".
+        System.out.print("What functionality do you want to run? ");
+        //Try to scan the user input looking for a character...
+        try {
+            //Get the character selected and transform it to uppercase given a String.
+            functionality = Character.toUpperCase(scanner.nextLine().charAt(0));
+            //If the functionality selected is...
+            //... A, then we give the user a menu to add a treasure.
+            //... B, then we give the user a menu to remove a treasure.
+            //... C, then we show the user a visualize the deck.
+            //... D, then we give the user a list of treasures given an area.
+            //... E, then we go back to the starting menu.
+            //... not a character value between A and E, then we output an error message "ERROR: Functionality.
+            //must be a character value (A-E)"
+            //Leave an empty line.
+            //... and we show the crew menu again
+            switch (functionality) {
+                case 'A' -> this.addPirate();
+                case 'B' -> this.removePirate();
+                case 'C' -> this.showPirate();
+                case 'D' -> this.ageHistogram();
+                case 'E' -> this.startMenu();
+                default -> {
+                    System.out.println("ERROR: Functionality must be a character value (A-E)");
+                    System.out.println();
+                    this.crewMenu();
+                }
+            }
+            //... if that is not the case, we catch the exception.
+        } catch (InputMismatchException e) {
+            //... not a character, then we output an error message "ERROR: Input mismatch, a character is required."
+            System.out.println("ERROR: Input mismatch, a character is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the crews menu again
+            this.crewMenu();
+        }
+    }
+
+    /**
+     * Allows the user to add a new pirate to the table, given a pirate name, age and role.
+     */
+    public void addPirate(){
+        Scanner scanner = new Scanner(System.in);
+        String name;
+        int age = 0;
+        String role;
+        System.out.println();
+        System.out.print("Enter the pirate's name: ");
+        try {
+            name = scanner.nextLine();
+        } catch (InputMismatchException e) {
+            //... not a String, then we output an error message "ERROR: Input mismatch, a String is required."
+            System.out.println("ERROR: Input mismatch, a String is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the add r-treasure menu
+            this.addPirate();
+        }
+        System.out.print("Enter the pirate's age: ");
+        try {
+            age = scanner.nextInt();
+        } catch (InputMismatchException e) {
+            //... not an integer, then we output an error message "ERROR: Input mismatch, an integer is required."
+            System.out.println("ERROR: Input mismatch, an integer is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the add r-treasure menu
+            this.addPirate();
+        }
+        try {
+            role = scanner.nextLine();
+        } catch (InputMismatchException e) {
+            //... not a String, then we output an error message "ERROR: Input mismatch, a String is required."
+            System.out.println("ERROR: Input mismatch, a String is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the add r-treasure menu
+            this.addPirate();
+        }
+
+        //Pirate addition
+        //TODO Check pirate exists
+        //TODO: Table addition
+        System.out.println();
+        System.out.println("The pirate was correctly added to the crew.");
+        this.crewMenu();
+    }
+
+    /**
+     * Allows the user to remove a pirate given its name,
+     */
+    public void removePirate(){
+        Scanner scanner = new Scanner(System.in);
+        String name;
+        System.out.println();
+        System.out.print("Enter the pirate's name: ");
+        try {
+            name = scanner.nextLine();
+        } catch (InputMismatchException e) {
+            //... not a String, then we output an error message "ERROR: Input mismatch, a String is required."
+            System.out.println("ERROR: Input mismatch, a String is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the remove pirate menu
+            this.removePirate();
+        }
+        //Pirate deletion
+        //TODO: Check pirate exists
+        //TODO: Table deletion
+        System.out.println();
+        System.out.println("The pirate was correctly removed from the crew.");
+        System.out.println();
+        System.out.println("⠀⠀⠀⢀⡤⢶⣶⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+        System.out.println("⠀⠀⢀⣠⣤⣤⣤⣿⣧⣀⣀⣀⣀⣀⣀⣀⣀⣤⡄⠀");
+        System.out.println("⢠⣾⡟⠋⠁⠀⠀⣸⠇⠈⣿⣿⡟⠉⠉⠉⠙⠻⣿⡀");
+        System.out.println("⢺⣿⡀⠀⠀⢀⡴⠋⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀ ⠙⠇");
+        System.out.println("⠈⠛⠿⠶⠚⠋⣀⣤⣤⣤⣿⣿⣇⣀⣀⣴⡆⠀⠀⠀");
+        System.out.println("⠀⠀⠀⠀⠠⡞⠋⠀⠀⠀⣿⣿⡏⠉⠛⠻⣿⡀⠀⠀");
+        System.out.println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⣿⣿⡇⠀⠀⠀⠈⠁⠀⠀");
+        System.out.println("⠀⠀⣠⣶⣶⣶⣶⡄⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀");
+        System.out.println("⠀⢰⣿⠟⠉⠙⢿⡟⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀");
+        System.out.println("⠀⢸⡟⠀⠀⠀⠘⠀⠀⠀⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀");
+        System.out.println("⠀⠈⢿⡄⠀⠀⠀⠀⠀⣼⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀");
+        System.out.println("⠀⠀⠀⠙⠷⠶⠶⠶⠿⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+        this.crewMenu();
+    }
+
+    /**
+     * Shows a specific pirate given its name.
+     */
+    public void showPirate(){
+        Scanner scanner = new Scanner(System.in);
+        String name;
+        System.out.println();
+        System.out.print("Enter the pirate's name: ");
+        try {
+            name = scanner.nextLine();
+        } catch (InputMismatchException e) {
+            //... not a String, then we output an error message "ERROR: Input mismatch, a String is required."
+            System.out.println("ERROR: Input mismatch, a String is required.");
+            //Leave an empty line.
+            System.out.println();
+            //... and we show the show pirate menu
+            this.showPirate();
+        }
+        //Pirate show
+        //TODO: check the pirate exists
+        //TODO: Table show
+        System.out.println();
+        System.out.println("    Name: ");
+        System.out.println("    Age: ");
+        System.out.println("    Role: ");
+        this.crewMenu();
+    }
+
+    /**
+     * Generates the histogram.
+     */
+    public void ageHistogram(){
+        System.out.println();
+        System.out.print("Generating histogram... ");
+        //TODO: Age Histogram
+        System.out.println();
+        this.crewMenu();
     }
 
     /**Show a menu where the user chooses how to manage the deck. It gives the next range of functionalities to
@@ -286,7 +542,7 @@ public class UI {
             //... not a character value between A and F, then we output an error message "ERROR: Functionality.
             //must be a character value (A-F)"
             //Leave an empty line.
-            //... and we show the routes menu again
+            //... and we show the deck menu again
             switch (functionality) {
                 case 'A' -> this.addRTreasure();
                 case 'B' -> this.removeRTreasure();
