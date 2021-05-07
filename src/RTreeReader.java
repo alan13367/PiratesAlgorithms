@@ -27,7 +27,14 @@ public class RTreeReader {
         return root;
     }
 
-    public static int getMaxnum(){
-        return maxnum;
+    public static double getScaleFactor(){
+        if(maxnum < 64){
+            return 100;
+        }
+        else if(maxnum<1000){
+            return 10;
+        }
+
+        return 1;
     }
 }

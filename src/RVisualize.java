@@ -18,21 +18,14 @@ public class RVisualize extends JPanel {
     public void paintComponent(Graphics g){
 
         super.paintComponent(g);
+        this.setBackground(Color.BLACK);
         Graphics2D g2D = (Graphics2D) g;
 
         Vec2[] coords =  rect.getBounds();
         Rectangle2D.Double rec = new Rectangle2D.Double((double)coords[0].x*(double)scaleFact,(double)coords[0].y*(double)scaleFact,(double)(coords[1].x-coords[0].x)*(double)scaleFact,(double)(coords[1].y-coords[0].y)*(double)scaleFact);
+        g2D.setStroke(new BasicStroke(2));
+        g2D.setColor(Color.GREEN);
         g2D.draw(rec);
-
-        /*
-        for (int i = 0; i <rect.getChildren().size(); i++) {
-            if(rect.getChildren().get(i) instanceof Rect){
-                coords = ((Rect)rect.getChildren().get(i)).getBounds();
-                rec = new Rectangle2D.Double((double)coords[0].x*(double)scaleFact,(double)coords[0].y*(double)scaleFact,(double)coords[1].x*(double)scaleFact,(double)coords[1].y*(double)scaleFact);
-                g2D.draw(rec);
-            }
-        }
-         */
 
         recursiveRect(g2D, rect.getChildren());
     }
@@ -46,8 +39,9 @@ public class RVisualize extends JPanel {
             for (RNode node : children){
                 RLeaf curr = (RLeaf) node;
                 pos = curr.getPos();
-                line2D = new Line2D.Double((double)pos.x*(double)scaleFact,(double) pos.y*(double)scaleFact,(double) pos.x*(double)scaleFact,(double)pos.y*(double)scaleFact);
-                g2D.setStroke(new BasicStroke(2));
+                line2D = new Line2D.Double((double)pos.x* scaleFact,(double) pos.y* scaleFact,(double) pos.x* scaleFact,(double)pos.y* scaleFact);
+                g2D.setStroke(new BasicStroke(4));
+                g2D.setColor(Color.RED);
                 g2D.draw(line2D);
             }
         }
@@ -55,8 +49,9 @@ public class RVisualize extends JPanel {
             for (RNode node : children){
                 Rect curr = (Rect) node;
                 coords = curr.getBounds();
-                rec = new Rectangle2D.Double((double)coords[0].x*(double)scaleFact,(double)coords[0].y* scaleFact,(double)(coords[1].x-coords[0].x)*(double)scaleFact,(double)(coords[1].y-coords[0].y)*(double)scaleFact);
-                g2D.setStroke(new BasicStroke(1));
+                rec = new Rectangle2D.Double((double)coords[0].x* scaleFact,(double)coords[0].y* scaleFact,(double)(coords[1].x-coords[0].x)* scaleFact,(double)(coords[1].y-coords[0].y)* scaleFact);
+                g2D.setStroke(new BasicStroke(2));
+                g2D.setColor(Color.GREEN);
                 g2D.draw(rec);
                 recursiveRect(g2D,curr.getChildren());
             }
