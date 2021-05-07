@@ -602,8 +602,8 @@ public class UI {
             //... and we show the add r-treasure menu
             this.addRTreasure();
         }
-        //Treasure addition
-        //TODO: R-treasure addition
+        RLeaf insert = new RLeaf(treasuresName, x,y);
+        rect.insert(insert);
         System.out.println();
         System.out.println("The treasure was correctly added to the deck.");
         this.deckMenu();
@@ -628,7 +628,11 @@ public class UI {
             this.removeRTreasure();
         }
         //Treasure remove
-        //TODO: R-treasure remove
+        int err = rect.delete(treasuresName);
+        if(err == 1){
+            System.out.println("The name doesn't exist");
+            this.removeTreasure();
+        }
         System.out.println();
         System.out.println("The treasure was correctly removed from the deck.");
         this.deckMenu();
