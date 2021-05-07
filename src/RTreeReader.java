@@ -5,6 +5,8 @@ import java.util.Scanner;
 public class RTreeReader {
     private static final String basepath = "RTrees/";
 
+    private static int maxnum;
+
     /**
      * static method to read file at provided path and output a root node
      * @param path the name of the file within "RTrees/" directory
@@ -14,7 +16,7 @@ public class RTreeReader {
     public static Rect reader(String path) throws FileNotFoundException {
         File file = new File(basepath + path);
         Scanner scanner = new Scanner(file);
-        int numOfNodes = scanner.nextInt();
+        maxnum = scanner.nextInt();
         scanner.nextLine();
         Rect root = new Rect();
         do{
@@ -23,5 +25,9 @@ public class RTreeReader {
             root.reBalance();
         }while (scanner.hasNextLine());
         return root;
+    }
+
+    public static int getMaxnum(){
+        return maxnum;
     }
 }
