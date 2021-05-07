@@ -175,8 +175,8 @@ public class Rect implements RNode{
             int target = 0;
             for (int i = 0; i < children.size(); i++) {
                 Rect curr = (Rect) children.get(i);
-                if(in.getPos().findDistance(curr.centre) < dist){
-                    dist = in.getPos().findDistance(curr.centre);
+                if(curr.findGrowth(in.getPos()) < dist){
+                    dist = curr.findGrowth(in.getPos());
                     target = i;
                 }
             }
@@ -214,8 +214,7 @@ public class Rect implements RNode{
         input.remove(p2);
 
         for(RLeaf curr: input){
-            if(curr.getPos().findDistance(((Rect)output.get(0)).getCentre()) <
-                    curr.getPos().findDistance(((Rect)output.get(1)).getCentre())){
+            if(((Rect)output.get(0)).findGrowth(curr.getPos()) < ((Rect)output.get(1)).findGrowth(curr.getPos())){
                 ((Rect)output.get(0)).insert(curr);
                 ((Rect)output.get(0)).reBalance();
             }
@@ -226,6 +225,31 @@ public class Rect implements RNode{
         }
 
         return output;
+    }
+
+    private float findGrowth(Vec2 point){
+        float x,y;
+        if(point.x < this.bounds[0].x){
+            x = this.bounds[0].x;
+        }
+        else if(point.x > this.bounds[1].x){
+            x = this.bounds[1].x;
+        }
+        else{
+            x = point.x;
+        }
+
+        if(point.y < this.bounds[0].y){
+            y = this.bounds[0].y;
+        }
+        else if(point.y > this.bounds[1].y){
+            y = this.bounds[1].y;
+        }
+        else{
+            y = point.y;
+        }
+        Vec2 out = new Vec2(x,y);
+        return out.findDistance(point);
     }
 
     public int delete(String name){
