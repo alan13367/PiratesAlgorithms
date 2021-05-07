@@ -648,6 +648,7 @@ public class UI {
         System.out.println();
         //Visualize
         RVisualize rVisualize = new RVisualize(this.rect);
+        rVisualize.setScaleFact(RTreeReader.getScaleFactor());
         MyFrame myFrame = new MyFrame(rVisualize);
 
         //TODO: ALAN PUT YOUR SHIT HERE
