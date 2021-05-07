@@ -207,12 +207,6 @@ public class UI {
             //... and we show the dataset table menu again
             this.datasetTables();
         }
-        catch (FileNotFoundException e) {
-            //... not a correct file, then we output an error message "ERROR: File not found, please enter a valid dataset."
-            System.out.println("ERROR: File not found, please enter a valid dataset.");
-            //... and we show the dataset table menu again
-            this.datasetTables();
-        }
         //Call the starting menu.
         this.startMenu();
     }
@@ -644,9 +638,14 @@ public class UI {
      * Visualize the deck representation
      */
     public void visualize(){
+
         System.out.println();
         System.out.println("Generating the deck representation...");
+        System.out.println();
         //Visualize
+        RVisualize rVisualize = new RVisualize(this.rect);
+        MyFrame myFrame = new MyFrame(rVisualize);
+
         //TODO: ALAN PUT YOUR SHIT HERE
         this.deckMenu();
     }
