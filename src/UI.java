@@ -648,7 +648,7 @@ public class UI {
         System.out.println();
         //Visualize
         RVisualize rVisualize = new RVisualize(this.rect);
-        MyFrame myFrame = new MyFrame(rVisualize);
+        MyFrame myFrame = new MyFrame(rVisualize,RTreeReader.getMaxnum());
 
         //TODO: ALAN PUT YOUR SHIT HERE
         this.deckMenu();
