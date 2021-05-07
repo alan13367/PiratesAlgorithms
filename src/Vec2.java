@@ -29,4 +29,12 @@ public class Vec2 {
         return (float) Math.sqrt(Math.pow((target.x - this.x),2) + Math.pow((target.y - this.y),2));
     }
 
+    /**
+     * Finds if two vectors are equal
+     * @param target vector to compare
+     * @return if the vectors have equal position
+     */
+    public boolean equal(Vec2 target){
+        return this.x == target.x && this.y == target.y;
+    }
 }
