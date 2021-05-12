@@ -40,7 +40,7 @@ public class RVisualize extends JPanel {
                 RLeaf curr = (RLeaf) node;
                 pos = curr.getPos();
                 line2D = new Line2D.Double((double)pos.x* scaleFact,(double) pos.y* scaleFact,(double) pos.x* scaleFact,(double)pos.y* scaleFact);
-                g2D.setStroke(new BasicStroke(4));
+                g2D.setStroke(new BasicStroke(3));
                 g2D.setColor(Color.RED);
                 g2D.draw(line2D);
             }

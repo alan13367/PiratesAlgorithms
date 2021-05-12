@@ -35,6 +35,6 @@ public class RTreeReader {
             return 10;
         }
 
-        return 1;
+        return 0.3;
     }
 }

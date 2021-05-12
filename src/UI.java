@@ -730,7 +730,8 @@ public class UI {
     public void searchByProximity () {
         Scanner scanner = new Scanner(System.in);
         int number = 0;
-        String point = new String();
+        String point;
+        String aux;
         String[] xAndY;
         float x = 0.0f;
         float y = 0.0f;
@@ -739,6 +740,7 @@ public class UI {
         System.out.println("Enter the number of treasures to find: ");
         try {
             number = scanner.nextInt();
+            aux = scanner.nextLine();
         } catch (InputMismatchException e) {
             //... not a integer, then we output an error message "ERROR: Input mismatch, an integer is required."
             System.out.println("ERROR: Input mismatch, an integer is required.");
