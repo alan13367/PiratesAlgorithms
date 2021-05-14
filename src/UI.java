@@ -16,6 +16,10 @@ public class UI {
      */
     private Rect rect;
     /**
+     * Table to hold the pirate info
+     */
+    private Table table;
+    /**
      * UI starting message
      */
     public void ui () {
@@ -199,12 +203,17 @@ public class UI {
             //Get the dataset selected.
             dataset = scanner.nextLine();
             //If the dataset selected is...
-            //TODO: Tables reading
+            table = new Table();
+            table.reader("tables" + dataset.toUpperCase() + ".paed" );
         }
         catch (InputMismatchException e) {
             //... not a string, then we output an error message "ERROR: Input mismatch, a string is required."
             System.out.println("ERROR: Input mismatch, a string is required.");
             //... and we show the dataset table menu again
+            this.datasetTables();
+        }
+        catch (FileNotFoundException e){
+            System.out.println("ERROR: File not found, please enter a valid dataset.");
             this.datasetTables();
         }
         //Call the starting menu.
@@ -364,9 +373,9 @@ public class UI {
      */
     public void addPirate(){
         Scanner scanner = new Scanner(System.in);
-        String name;
+        String name = "";
         int age = 0;
-        String role;
+        String role = "";
         System.out.println();
         System.out.print("Enter the pirate's name: ");
         try {
@@ -402,8 +411,9 @@ public class UI {
         }
 
         //Pirate addition
-        //TODO Check pirate exists
-        //TODO: Table addition
+        //TODO Check pirate exists (DONT KNOW WHAT THIS MEANS)
+        Pirate pirate = new Pirate(name, age,role);
+        table.insert(pirate);
         System.out.println();
         System.out.println("The pirate was correctly added to the crew.");
         this.crewMenu();
@@ -414,7 +424,7 @@ public class UI {
      */
     public void removePirate(){
         Scanner scanner = new Scanner(System.in);
-        String name;
+        String name = "";
         System.out.println();
         System.out.print("Enter the pirate's name: ");
         try {
@@ -428,8 +438,10 @@ public class UI {
             this.removePirate();
         }
         //Pirate deletion
-        //TODO: Check pirate exists
-        //TODO: Table deletion
+        if(table.delete(name) == 1){
+            System.out.println("ERROR: Pirate does not exist");
+            this.removePirate();
+        }
         System.out.println();
         System.out.println("The pirate was correctly removed from the crew.");
         System.out.println();
