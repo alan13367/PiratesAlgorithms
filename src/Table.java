@@ -92,4 +92,25 @@ public class Table {
         return out.intValue();
     }
 
+    public int[] getAges (){
+        int maxnum = 0;
+
+        for (ArrayList<Pirate> pirArray: pirateList) {
+            for (Pirate pirate:pirArray) {
+                if(pirate.getAge() > maxnum){
+                    maxnum = pirate.getAge();
+                }
+            }
+        }
+
+        int[] ages = new int[maxnum];
+        for (ArrayList<Pirate> pirArray: pirateList) {
+            for (Pirate pirate:pirArray) {
+                ages[pirate.getAge()-1] += 1;
+            }
+        }
+
+        return ages;
+    }
+
 }
