@@ -391,6 +391,7 @@ public class UI {
         System.out.print("Enter the pirate's age: ");
         try {
             age = scanner.nextInt();
+            scanner.nextLine();
         } catch (InputMismatchException e) {
             //... not an integer, then we output an error message "ERROR: Input mismatch, an integer is required."
             System.out.println("ERROR: Input mismatch, an integer is required.");
@@ -399,6 +400,7 @@ public class UI {
             //... and we show the add r-treasure menu
             this.addPirate();
         }
+        System.out.print("Enter the pirate's role: ");
         try {
             role = scanner.nextLine();
         } catch (InputMismatchException e) {
@@ -412,11 +414,17 @@ public class UI {
 
         //Pirate addition
         //TODO Check pirate exists (DONT KNOW WHAT THIS MEANS)
-        Pirate pirate = new Pirate(name, age,role);
-        table.insert(pirate);
-        System.out.println();
-        System.out.println("The pirate was correctly added to the crew.");
-        this.crewMenu();
+        if(table.get(name) == null){
+            Pirate pirate = new Pirate(name, age,role);
+            table.insert(pirate);
+            System.out.println();
+            System.out.println("The pirate was correctly added to the crew.");
+            this.crewMenu();
+        }else{
+            System.out.println("\nThe pirate alredy exists please enter another one");
+            this.addPirate();
+        }
+
     }
 
     /**
@@ -465,7 +473,8 @@ public class UI {
      */
     public void showPirate(){
         Scanner scanner = new Scanner(System.in);
-        String name;
+        String name = null;
+        Pirate pirate;
         System.out.println();
         System.out.print("Enter the pirate's name: ");
         try {
@@ -481,11 +490,18 @@ public class UI {
         //Pirate show
         //TODO: check the pirate exists
         //TODO: Table show
-        System.out.println();
-        System.out.println("    Name: ");
-        System.out.println("    Age: ");
-        System.out.println("    Role: ");
-        this.crewMenu();
+        pirate = table.get(name);
+        if(pirate == null){
+            System.out.println("\nError 404 : Pirate Not Found");
+            this.crewMenu();
+        }else{
+            System.out.println();
+            System.out.println("    Name: " + pirate.getName());
+            System.out.println("    Age: " + pirate.getAge());
+            System.out.println("    Role: " + pirate.getRole());
+            this.crewMenu();
+        }
+
     }
 
     /**
@@ -495,6 +511,8 @@ public class UI {
         System.out.println();
         System.out.print("Generating histogram... ");
         //TODO: Age Histogram
+        TableQueries tableQueries = new TableQueries(table.getAges());
+        tableQueries.drawChart();
         System.out.println();
         this.crewMenu();
     }
@@ -662,8 +680,6 @@ public class UI {
         RVisualize rVisualize = new RVisualize(this.rect);
         rVisualize.setScaleFact(RTreeReader.getScaleFactor());
         MyFrame myFrame = new MyFrame(rVisualize);
-
-        //TODO: ALAN PUT YOUR SHIT HERE
         this.deckMenu();
     }
 
