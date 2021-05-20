@@ -19,6 +19,31 @@ public class Rect implements RNode{
         this.children = new ArrayList<>();
     }
 
+    public Rect(Vec2 corner1, Vec2 corner2){
+        this.parent = null;
+        this.bounds = new Vec2[2];
+        float xmin = corner1.x;
+        float xmax = corner2.x;
+
+        float ymin = corner1.y;
+        float ymax = corner2.y;
+
+        if(corner2.x < xmin) {
+            xmin = corner2.x;
+            xmax = corner1.x;
+        }
+
+        if(corner2.y < ymin) {
+            ymin = corner2.y;
+            ymax = corner1.y;
+        }
+
+        bounds[0] = new Vec2(xmin, ymin);
+        bounds[1] = new Vec2(xmax, ymax);
+        calcCentre();
+        this.children = null;
+    }
+
     /**
      * Gets the center point of the rectangle
      * @return a vec2 object containing the center coordinates
