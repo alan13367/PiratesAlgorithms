@@ -37,7 +37,6 @@ public class Dijkstra {
      * @throws IndexOutOfBoundsException thiss will be thrown when the start and end are not connected
      */
     private List<Node> dij(Node start, Node end) throws IndexOutOfBoundsException{
-        long startTime = System.currentTimeMillis();
         int count = 0;
         finalCost = Float.MAX_VALUE;
         walk = new ArrayList<>();
@@ -77,8 +76,6 @@ public class Dijkstra {
         }
         //finalCost = d[graph.getIndex(walk.get(walk.size() - 1).getId())];
         finalCost = d[graph.getIndex(end.getId())];
-        long endTime = System.currentTimeMillis();
-        System.out.println("That took " + (endTime - startTime) + " milliseconds");
         return walks[graph.getIndex(end.getId())];
     }
 
