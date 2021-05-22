@@ -12,10 +12,17 @@ public class TableQueries {
 
     private int[] ages;
 
+    /**
+     * Public constructor to build the class with the information of the ages on it.
+     * @param ages
+     */
     public TableQueries(int[] ages){
         this.ages = ages;
     }
 
+    /**
+     * Function that displays the histogram of the number of pirates by ages.
+     */
     public void drawChart() {
 
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
