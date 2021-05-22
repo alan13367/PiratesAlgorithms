@@ -11,10 +11,18 @@ public class RVisualize extends JPanel {
 
     private double scaleFact;
 
+    /**
+     * Constructor of the class
+     * @param rect Rect to pass the whole information of the R-Tree
+     */
     public RVisualize(Rect rect){
         this.rect = rect;
     }
 
+    /**
+     * Function to display the R-Tree
+     * @param g Graphics component
+     */
     public void paintComponent(Graphics g){
 
         super.paintComponent(g);
@@ -30,6 +38,11 @@ public class RVisualize extends JPanel {
         recursiveRect(g2D, rect.getChildren());
     }
 
+    /**
+     * Recursive function to loop through the data structure and display each rect and finally RLeafs
+     * @param g2D 2D graphics component
+     * @param children Arraylist of the children of the Rect being looped through
+     */
     private void recursiveRect(Graphics2D g2D,ArrayList<RNode> children){
         Rectangle2D.Double rec;
         Line2D.Double line2D ;
@@ -62,6 +75,10 @@ public class RVisualize extends JPanel {
 
     }
 
+    /**
+     * Setter for the scale factor of the visualization
+     * @param scaleFact
+     */
     public void setScaleFact(double scaleFact) {
         this.scaleFact = scaleFact;
     }

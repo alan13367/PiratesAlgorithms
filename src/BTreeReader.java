@@ -15,6 +15,7 @@ public class BTreeReader {
      * @throws FileNotFoundException when the provided name doesn't exist within the "trees" folder
      */
     public static BTNode reader(String path) throws FileNotFoundException {
+
         File file = new File(basepath + path);
         Scanner scanner = new Scanner(file);
         int numOfNodes = scanner.nextInt();
@@ -26,6 +27,7 @@ public class BTreeReader {
         }while (scanner.hasNextLine());
 
         int max = BTreeAVL.max(root);
+
         return root;
     }
 
@@ -64,7 +66,6 @@ public class BTreeReader {
                 in.setlChild(add(in.getlChild(),add));
             }
         }
-
         return BTreeAVL.balance(in);
     }
 

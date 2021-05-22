@@ -10,6 +10,7 @@ public class Table {
     private int numPirates;
     private ArrayList<Pirate>[] pirateList;
 
+
     /**
      * Method which extracts the information from the .paed file.
      * @param path the name of the file.
@@ -92,6 +93,10 @@ public class Table {
         return out.intValue();
     }
 
+    /**
+     * Function to get an array with the number of pirates by the age
+     * @return Array of integers with the number of pirates in each age
+     */
     public int[] getAges (){
         int maxnum = 0;
 

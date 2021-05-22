@@ -27,6 +27,11 @@ public class RTreeReader {
         return root;
     }
 
+
+    /**
+     * Gets the scale factor based on the number of Points in the data structure
+     * @return Double that has the scale factor
+     */
     public static double getScaleFactor(){
         if(maxnum < 64){
             return 100;

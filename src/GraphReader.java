@@ -13,6 +13,8 @@ public class GraphReader {
      * @return a graph class holding two lists, one of all the nodes and one for all the edges.
      */
     public Graph reader(String path) throws FileNotFoundException {
+
+
         ArrayList<Node> nodes = new ArrayList<>();
         ArrayList<Edge> edges = new ArrayList<>();
         Graph graph;
@@ -54,6 +56,8 @@ public class GraphReader {
 
         graph.setEdges(edges);
         graph.setaMatrix(mtx);
+
+
         return graph;
     }
 
