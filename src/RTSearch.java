@@ -1,93 +1,103 @@
 import java.util.ArrayList;
 
 public class RTSearch {
-    private float minimumDistance = 0;
     public ArrayList<RLeaf> searchByArea(Rect root, Vec2 corner1, Vec2 corner2) {
         Rect rectUser = new Rect(corner1, corner2);
-        return sbA(root, rectUser, null);
-
+        ArrayList<RLeaf> pointsList = new ArrayList<>();
+        return sbA(root, rectUser, pointsList);
     }
     private ArrayList<RLeaf> sbA(Rect rectTree, Rect rectUser, ArrayList<RLeaf> pointsList) {
-
-        for(int i = 0; i < rectTree.getChildren().size(); i++) {
-            if (rectTree.getChildren().get(0) instanceof RLeaf) {
-                pointsList.add((RLeaf) rectTree.getChildren().get(0));
+        for (int i = 0; i < rectTree.getChildren().size(); i++) {
+            if(rectTree.getChildren().get(i) instanceof Rect) {
+                if(isOverlapped(rectUser, (Rect) rectTree.getChildren().get(i))) {
+                    pointsList = sbA((Rect) rectTree.getChildren().get(i), rectUser, pointsList);
+                }
             }
-            if (isOverlapped(rectUser, rectTree)) {
-                sbA((Rect) rectTree.getChildren().get(0), rectUser, pointsList);
+            else {
+                RLeaf temp = (RLeaf) rectTree.getChildren().get(i);
+                if(rectUser.findGrowth(temp.getPos()) == 0) {
+                    pointsList.add(temp);
+                }
             }
         }
-            return pointsList;
-
+        return pointsList;
     }
+
 
     private boolean isOverlapped(Rect userRectangle, Rect treeRectangle) {
-        if(userRectangle.getBounds()[0].x > treeRectangle.getBounds()[0].x && userRectangle.getBounds()[0].y > treeRectangle.getBounds()[0].y) {
-            return true;
+        if(userRectangle.getBounds()[0].x > treeRectangle.getBounds()[1].x ||
+                    userRectangle.getBounds()[1].x < treeRectangle.getBounds()[0].x) {
+                return false;
         }
-        if(userRectangle.getBounds()[1].x < treeRectangle.getBounds()[1].x && userRectangle.getBounds()[1].y < treeRectangle.getBounds()[1].y) {
-            return true;
+        else if(userRectangle.getBounds()[0].y > treeRectangle.getBounds()[1].y ||
+                userRectangle.getBounds()[1].y < treeRectangle.getBounds()[0].y) {
+            return false;
         }
-        return false;
+        return true;
     }
 
 
-    public RLeaf searchNearest(Rect tree, Vec2 point) {
-        RNode nearest = null;
-        if(tree.getChildren().isEmpty()) {
-            return null;
-        }
-        if(tree.getChildren().get(0).getClass() == RLeaf.class) {
-            return (RLeaf) tree.getChildren().get(0);
-        }
-        for(int i = 0; i < tree.getChildren().size(); i++) {
-            if (tree.getChildren().get(i).getClass() == RNode.class) {
-                RNode node = tree.getChildren().get(i);
-                float distance = node.getParent().getCentre().findDistance(point);
-                if (distance < minimumDistance) {
-                    minimumDistance = distance;
-                    nearest = tree.getChildren().get(i);
-                }
-            }
-        }
-        assert nearest != null;
-        searchNearest((Rect) nearest, point);
+    public ArrayList<RLeaf> searchNearest(Rect tree, Vec2 point, int numTreasures) {
+        ArrayList<RLeaf> rLeaves = new ArrayList<>();
 
-        return null;
+        return sN(tree, point, rLeaves, numTreasures);
     }
 
+    private ArrayList<RLeaf> sN(Rect tree, Vec2 point, ArrayList<RLeaf> rLeaves, int numTreasures) {
+        float minimumDistanceRect = Float.MAX_VALUE;
+        float minimumDistanceLeaf = Float.MAX_VALUE;
+        ArrayList<Rect> children = orderChildrenRect(tree, point);
+        for (int i = 0; i < children.size(); i++) {
+            if (rLeaves.size() >= numTreasures) {
+                break;
+            }
 
-
-
-
-
-
-
-
-
-    /*
-        if(tree.getChildren().isEmpty()){
-            return null;
-        }
-        if(tree.getChildren().get(0).getClass() == RLeaf.class){
-            for (RNode curr: tree.getChildren()){
-                RLeaf node = (RLeaf) curr;
-                if(node.getName().equals(value)){
-                    return node;
+            for (int j = 0; j < children.get(i).getChildren().size(); j++) {
+                if(children.get(i).getChildren().get(j) instanceof RLeaf) {
+                    if (minimumDistanceLeaf > ((RLeaf) children.get(i).getChildren().get(j)).getPos().findDistance(point)) {
+                        minimumDistanceLeaf = ((RLeaf) children.get(i).getChildren().get(j)).getPos().findDistance(point);
+                        rLeaves.add(0, (RLeaf) children.get(i).getChildren().get(j));
+                    } else {
+                        rLeaves.add((RLeaf) children.get(i).getChildren().get(j));
+                    }
+                }
+                else{
+                    children.addAll(orderChildrenRect((Rect) children.get(i).getChildren().get(j), point));
                 }
             }
         }
-        else{
-            for (RNode curr: tree.getChildren()) {
-                Rect node = (Rect) curr;
-                RLeaf out = RTSearch.search(node, value);
-                if(out != null){
-                    return out;
+        return rLeaves;
+    }
+
+    private ArrayList<Rect> orderChildrenRect(Rect parentRect, Vec2 point) {
+        float minimumDistanceRect = Float.MAX_VALUE;
+        ArrayList<Rect> orderedChildren = new ArrayList<>();
+        for (int i = 0; i < parentRect.getChildren().size(); i++) {
+            if (parentRect.getChildren().get(i) instanceof Rect) {
+                if(minimumDistanceRect > ((Rect) parentRect.getChildren().get(i)).getCentre().findDistance(point)) {
+                    minimumDistanceRect = ((Rect) parentRect.getChildren().get(i)).getCentre().findDistance(point);
+                    orderedChildren.add(0, (Rect) parentRect.getChildren().get(i));
+                }
+                else{
+                    orderedChildren.add((Rect) parentRect.getChildren().get(i));
                 }
             }
         }
-        return null;
 
-     */
-
+        bubbleSort(orderedChildren, point);
+        return orderedChildren;
+    }
+    
+    private ArrayList<Rect> bubbleSort(ArrayList<Rect> children, Vec2 point) {
+        for (int i = 0; i < children.size() - 1; i++) {
+            for (int j = 0; j < children.size() - i - 1; j++) {
+                if(children.get(j).getCentre().findDistance(point) > children.get(j + 1).getCentre().findDistance(point)) {
+                    Rect temp = children.get(j);
+                    children.set(j, children.get(j + 1));
+                    children.set(j + 1, temp);
+                }
+            }
+        }
+        return children;
+    }
 }

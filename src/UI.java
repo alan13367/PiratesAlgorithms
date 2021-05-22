@@ -413,7 +413,6 @@ public class UI {
         }
 
         //Pirate addition
-        //TODO Check pirate exists (DONT KNOW WHAT THIS MEANS)
         if(table.get(name) == null){
             Pirate pirate = new Pirate(name, age,role);
             table.insert(pirate);
@@ -488,8 +487,6 @@ public class UI {
             this.showPirate();
         }
         //Pirate show
-        //TODO: check the pirate exists
-        //TODO: Table show
         pirate = table.get(name);
         if(pirate == null){
             System.out.println("\nError 404 : Pirate Not Found");
@@ -510,7 +507,6 @@ public class UI {
     public void ageHistogram(){
         System.out.println();
         System.out.print("Generating histogram... ");
-        //TODO: Age Histogram
         TableQueries tableQueries = new TableQueries(table.getAges());
         tableQueries.drawChart();
         System.out.println();
@@ -745,10 +741,15 @@ public class UI {
             this.searchByArea();
         }
         //Treasure remove
-        //TODO: R-treasure search by area
-        System.out.println();
-        System.out.println(number + " treasures were found in this area:");
+        Vec2 corner1 = new Vec2(x1, y1);
+        Vec2 corner2 = new Vec2(x2, y2);
+        RTSearch rtSearch = new RTSearch();
+        ArrayList<RLeaf> treasures = rtSearch.searchByArea(this.rect, corner1, corner2);
+        System.out.println(treasures.size() + " treasures were found in this area:");
         //TODO: printing of the treasures
+        for (int i = 0; i < treasures.size(); i++) {
+            System.out.println(treasures.get(i).getName() + "(" + treasures.get(i).getPos().x + ", " + treasures.get(i).getPos().y + ")");
+        }
         this.deckMenu();
     }
 
@@ -802,9 +803,14 @@ public class UI {
         }
 
         //TODO: R-treasure search by proximity
-        System.out.println();
+        Vec2 userPoint = new Vec2(x, y);
+        RTSearch rtSearch = new RTSearch();
+        ArrayList<RLeaf> treasure = rtSearch.searchNearest(this.rect, userPoint, number);
         System.out.println("The " + number + " nearest treasures to this point are:");
         //TODO: printing of the treasures
+        for (int i = 0; i < number; i++) {
+            System.out.println(treasure.get(i).getName() + " (" + treasure.get(i).getPos().x + ", " + treasure.get(i).getPos().y + ")");
+        }
         this.deckMenu();
     }
     /**

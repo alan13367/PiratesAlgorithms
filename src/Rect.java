@@ -87,6 +87,8 @@ public class Rect implements RNode{
         this.parent = parent;
     }
 
+
+
     /**
      * Re calculates the bounds of the rectangle according to its children
      */
@@ -281,7 +283,7 @@ public class Rect implements RNode{
         return output;
     }
 
-    private float findGrowth(Vec2 point){
+    public float findGrowth(Vec2 point){
         float x,y;
         if(point.x < this.bounds[0].x){
             x = this.bounds[0].x;
