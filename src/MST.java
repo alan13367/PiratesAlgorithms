@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Alan Beltran Pozo 08/03/21
  */
 public class MST {
-
+    /**Integer array of fathers*/
     private int[] fathers;
 
     /**

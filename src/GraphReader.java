@@ -3,8 +3,13 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
-
+/**
+ * Graph parser from the .paed to the Graph class
+ * @author Alvaro Delgado & Ramon Sabater
+ * @version 2.0 23 May 2021
+ */
 public class GraphReader {
+    /**String with the base path*/
     private static String basePath = "Graphs/";
 
     /**

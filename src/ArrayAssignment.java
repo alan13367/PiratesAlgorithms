@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 /**
  * int array that has the id assigned to each node.
- *
+ * @author Alfonso Sarro
  * @version 2.0 23 May 2021
  */
 public class ArrayAssignment {

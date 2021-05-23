@@ -3,7 +3,8 @@ import java.util.LinkedList;
 
 /**
  * Class for the implementation of the Traversals of the Binary Tree Data Structure
- * Created by Alan Beltran Pozo 18/03/21
+ * @author Alan Beltran Pozo
+ * @version 2.0 18/03/21
  */
 public class BTreeTraversals {
 

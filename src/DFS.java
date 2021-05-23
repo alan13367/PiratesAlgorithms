@@ -3,7 +3,8 @@ import java.util.List;
 
 /**
  * Class that implements Depth-First Search for the Graphs data structure
- * Created by Alan Beltran Pozo 03/03/21
+ * @author Created by Alan Beltran Pozo
+ * @version 03/03/21
  */
 
 public class DFS {
