@@ -680,7 +680,7 @@ public class UI {
     }
 
     /**
-     * Search the treasures inside an area
+     * Search the treasures inside an area designated by the user
      */
     public void searchByArea(){
         Scanner scanner = new Scanner(System.in);
@@ -692,7 +692,6 @@ public class UI {
         float y1 = 0.0f;
         float x2 = 0.0f;
         float y2 = 0.0f;
-        int number = 0;
         System.out.println();
         System.out.println("Enter the rectangle's first point (X,Y): ");
         try {
@@ -740,13 +739,13 @@ public class UI {
             //... and we show the add search by area menu
             this.searchByArea();
         }
-        //Treasure remove
+        //Create the 2 points and pass it to the search by area function
         Vec2 corner1 = new Vec2(x1, y1);
         Vec2 corner2 = new Vec2(x2, y2);
         RTSearch rtSearch = new RTSearch();
         ArrayList<RLeaf> treasures = rtSearch.searchByArea(this.rect, corner1, corner2);
         System.out.println(treasures.size() + " treasures were found in this area:");
-        //TODO: printing of the treasures
+        //Printing of the treasures
         for (int i = 0; i < treasures.size(); i++) {
             System.out.println(treasures.get(i).getName() + "(" + treasures.get(i).getPos().x + ", " + treasures.get(i).getPos().y + ")");
         }
@@ -802,12 +801,12 @@ public class UI {
             this.searchByProximity();
         }
 
-        //TODO: R-treasure search by proximity
+        //We create the point and pass it to the search by proximity function
         Vec2 userPoint = new Vec2(x, y);
         RTSearch rtSearch = new RTSearch();
         ArrayList<RLeaf> treasure = rtSearch.searchNearest(this.rect, userPoint, number);
         System.out.println("The " + number + " nearest treasures to this point are:");
-        //TODO: printing of the treasures
+        //Printing of the treasures
         for (int i = 0; i < number; i++) {
             System.out.println(treasure.get(i).getName() + " (" + treasure.get(i).getPos().x + ", " + treasure.get(i).getPos().y + ")");
         }
