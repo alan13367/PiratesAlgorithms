@@ -2,7 +2,7 @@ import java.security.PublicKey;
 import java.util.ArrayList;
 /**
  * Graph class to store the Data Structure
- * @author Alvaro Delgado & Ramon Sabater
+ * @author Alvaro Delgado and Ramon Sabater
  * @version 2.0 23 May 2021
  */
 public class Graph {

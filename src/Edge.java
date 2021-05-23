@@ -1,6 +1,6 @@
 /**
  * Edge created from a point to another.
- * @author Ramon Sabater & Alvaro Delgado
+ * @author Ramon Sabater and Alvaro Delgado
  * @version 2.0 23 May 2021
  */
 public class Edge {
