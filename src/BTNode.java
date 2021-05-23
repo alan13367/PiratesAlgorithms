@@ -1,17 +1,23 @@
 import java.math.BigInteger;
 /**
  * Binary tree, works with references using BTNode as the root node.
- *
+ * @author Ramon Sabater
  * @version 2.0 23 May 2021
  */
 public class BTNode {
-
+    /**String to represent the name of the Node*/
     private String name;
+    /**BigInteger to represent the value of the Node*/
     private BigInteger value;
+    /**Integer to represent the balance factor of the Node*/
     private int bf;
+    /**Integer to represent the height of the Node*/
     private int height;
+    /**Binary Tree to represent the parent of the Node*/
     private BTNode parent;
+    /**Binary Tree to represent the left child of the Node*/
     private BTNode lChild;
+    /**Binary Tree to represent the right child of the Node*/
     private BTNode rChild;
 
     /**

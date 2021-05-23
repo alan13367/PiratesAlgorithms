@@ -1,12 +1,14 @@
 /**
  * Edge created from a point to another.
- *
+ * @author Ramon Sabater & Alvaro Delgado
  * @version 2.0 23 May 2021
  */
 public class Edge {
-    
+    /**Integer to know where the edge start*/
     private int from;
+    /**Integer to know where the edge stops*/
     private int to;
+    /**Integer to know the cost of the edge*/
     private float cost;
 
     /**

@@ -6,10 +6,11 @@ import java.util.Queue;
 import java.util.Scanner;
 /**
  * Binary Tree parser from the .paed to our desired format.
- *
+ * @author Ramon Sabater & Alvaro Delgado
  * @version 2.0 23 May 2021
  */
 public class BTreeReader {
+    /**String for the basepath*/
     private static String basepath = "Trees/";
 
     /**

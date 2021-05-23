@@ -1,14 +1,18 @@
 import java.security.PublicKey;
 import java.util.ArrayList;
 /**
- * bfs algorithm applied to searching a specific node.
- *
+ * Graph class to store the Data Structure
+ * @author Alvaro Delgado & Ramon Sabater
  * @version 2.0 23 May 2021
  */
 public class Graph {
+    /**Array List with Nodes*/
     private ArrayList<Node> nodes;
+    /**Integer array with the dictionary to translate Ids*/
     private int[] dict;
+    /**Float matrix*/
     private float[][] aMatrix;
+    /**ArrayList of Edges*/
     private ArrayList<Edge> edges;
 
     /**
@@ -82,6 +86,10 @@ public class Graph {
         return out;
     }
 
+    /**
+     * Sets the edges to the parameter given within.
+     * @param edges to set inside the Array List.
+     */
     public void setEdges (ArrayList<Edge> edges) {
         this.edges = edges;
     }

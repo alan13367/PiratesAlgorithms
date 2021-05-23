@@ -3,12 +3,15 @@ import java.util.Arrays;
 import java.util.List;
 /**
  * Dijkstra algorithm applied to search the "shortest" path between two nodes.
- *
+ * @author Ramon Sabater
  * @version 2.0 23 May 2021
  */
 public class Dijkstra {
+    /**Graph where we will apply Dijkstra*/
     private Graph graph;
+    /**Float with the Final Cost of the Dijkstra*/
     private float finalCost;
+    /**List of nodes with the result*/
     private List<Node> walk;
 
     /**
