@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Dfs algorithm applied to searching an arraylist of nodes.
+ *
+ * @version 2.0 23 May 2021
+ */
 public class DFS {
     /**
      * The function from a starting node does a DFS for the interest points in the graph.

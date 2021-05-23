@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * Binary tree but that uses AVL.
+ *
+ * @version 2.0 23 May 2021
+ */
 public class BTreeAVL {
     /**
      * Balances the current node

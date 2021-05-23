@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
-
+/**
+ * Binary Tree traversals: pre order, post order, in order or by level.
+ *
+ * @version 2.0 23 May 2021
+ */
 public class BTreeTraversals {
 
     /**
