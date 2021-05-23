@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/**
+ * Class implementing R-Trees Data structure Search
+ * Created by Alfonso Sarro 22/03/21
+ */
 public class RTSearch {
     /**
      * Function that will get the 2 points designated by the user and return all the RLeaves inside that area

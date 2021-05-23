@@ -1,3 +1,7 @@
+/**
+ * Class implementing a R-Tree Leaf through the RNode Interface
+ * Created by Ramon Sabater 25/04/21
+ */
 public class RLeaf implements RNode{
 
     private String name;

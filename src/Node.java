@@ -1,3 +1,7 @@
+/**
+ * Class for the graphs Node Implementation
+ * Created by Ramon Sabater 15/02/21
+ */
 public class Node {
 
     private int id;

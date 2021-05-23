@@ -1,3 +1,7 @@
+/**
+ * Class implementing the a Pirate for the Tables Data Structure
+ * Created by Ramon Sabater 15/05/21
+ */
 public class Pirate {
     private String name;
     private int age;

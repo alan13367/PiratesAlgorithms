@@ -2,6 +2,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Class for Reading and Creation of the R-Tree data structure
+ * Created by Alvaro Delgado and Ramon Sabater 25/04/21
+ */
 public class RTreeReader {
     private static final String basepath = "RTrees/";
 
