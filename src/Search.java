@@ -2,6 +2,10 @@ import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * Class to implement Binary Tree Search by Exact Value and Range
+ * Created by Alvaro Delgado Perez 23/03/21
+ */
 public class Search {
     /**
      * Given the root of a binary tree it founds the element that has the same value as the one requested.

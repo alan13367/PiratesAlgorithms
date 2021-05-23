@@ -1,3 +1,7 @@
+/**
+ * Class implementing a 2D Vector
+ * Created by Ramon Sabater 27/04/21
+ */
 public class Vec2 {
     public float x;
     public float y;

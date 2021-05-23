@@ -4,6 +4,10 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class implementing the Table data structure
+ * Created by Ramon Sabater and Alvaro Delgado 15/03/21
+ */
 public class Table {
     private static final String basePath = "Tables/";
     private static final int[] primes = {11,13,17,19,23,29,31,37,41,43};

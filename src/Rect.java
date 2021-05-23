@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/**
+ * Class implementing the Rectangles of the R-Tree data structure
+ * Created by Ramon Sabater 25/04/21
+ */
 public class Rect implements RNode{
 
     public static final int MAX_CHILDREN = 3;
@@ -241,34 +245,6 @@ public class Rect implements RNode{
         ((Rect)output.get(1)).insert(p2);
         input.remove(p1);
         input.remove(p2);
-        /*
-        if(numChildren >= MIN_CHILDREN * 2){
-            while (((Rect)output.get(0)).getChildren().size() < MIN_CHILDREN) {
-                dist = Float.MAX_VALUE;
-                int index = -1;
-                for (int i = 0; i < input.size(); i++) {
-                    if(((Rect)output.get(0)).findGrowth(input.get(i).getPos()) < dist){
-                        dist = ((Rect)output.get(0)).findGrowth(input.get(i).getPos());
-                        index = i;
-                    }
-                }
-                ((Rect)output.get(0)).insert(input.get(index));
-                input.remove(index);
-            }
-            while (((Rect)output.get(1)).getChildren().size() < MIN_CHILDREN) {
-                dist = Float.MAX_VALUE;
-                int index = -1;
-                for (int i = 0; i < input.size(); i++) {
-                    if(((Rect)output.get(1)).findGrowth(input.get(i).getPos()) < dist){
-                        dist = ((Rect)output.get(1)).findGrowth(input.get(i).getPos());
-                        index = i;
-                    }
-                }
-                ((Rect)output.get(1)).insert(input.get(index));
-                input.remove(index);
-            }
-        }
-        */
         for(RLeaf curr: input){
             if(((Rect)output.get(0)).findGrowth(curr.getPos()) < ((Rect)output.get(1)).findGrowth(curr.getPos())){
                 ((Rect)output.get(0)).insert(curr);

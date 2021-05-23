@@ -2,6 +2,10 @@ import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import java.util.*;
 
+/**
+ * Class implementing the UI
+ * Created by Alvaro Delgado Perez 23/05/21
+ */
 public class UI {
     /**
      * Graph to store the graph dataset selected.

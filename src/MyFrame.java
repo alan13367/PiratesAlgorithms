@@ -8,7 +8,7 @@ public class MyFrame extends JFrame {
 
 
     /**
-     *
+     *Constructor class for MyFrame
      * @param rVisualize class to pass the Rect data into the frame and display the R-Tree
      */
     public MyFrame(RVisualize rVisualize){
