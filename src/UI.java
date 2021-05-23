@@ -4,7 +4,8 @@ import java.util.*;
 
 /**
  * Class implementing the UI
- * Created by Alvaro Delgado Perez 23/05/21
+ * @author Alvaro Delgado
+ * @version 2.0 23 May 2021
  */
 public class UI {
     /**

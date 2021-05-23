@@ -2,7 +2,8 @@ import java.util.ArrayList;
 
 /**
  * Class implementing R-Trees Data structure Search
- * Created by Alfonso Sarro 22/03/21
+ * @author Alfonso Sarro
+ * @version 2.0 22 March 2021
  */
 public class RTSearch {
     /**

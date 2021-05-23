@@ -1,6 +1,7 @@
 /**
  * Class implementing a R-Tree Leaf through the RNode Interface
- * Created by Ramon Sabater 25/04/21
+ * @author Ramon Sabater
+ * @version 2.0 25 April 2021
  */
 public class RLeaf implements RNode{
 

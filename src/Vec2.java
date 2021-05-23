@@ -1,6 +1,7 @@
 /**
  * Class implementing a 2D Vector
- * Created by Ramon Sabater 27/04/21
+ * @author Ramon Sabater
+ * @version 2.0 27 April 2021
  */
 public class Vec2 {
     public float x;

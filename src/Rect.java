@@ -2,7 +2,8 @@ import java.util.ArrayList;
 
 /**
  * Class implementing the Rectangles of the R-Tree data structure
- * Created by Ramon Sabater 25/04/21
+ * @author Ramon Sabater
+ * @version 2.0 25 April 2021
  */
 public class Rect implements RNode{
 

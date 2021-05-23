@@ -3,7 +3,8 @@ import java.util.List;
 
 /**
  * Class to implement the Minimum Spanning Tree algorithm to the Graphs data structure
- * Created by Alan Beltran Pozo 08/03/21
+ * @author Alan Beltran
+ * @version 2.0 8 March 2021
  */
 public class MST {
     /**Integer array of fathers*/

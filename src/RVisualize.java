@@ -7,7 +7,8 @@ import java.util.ArrayList;
 
 /**
  * Class for the reading and loading of the R-Tree data structure for it to be visualized
- * Created by Alan Beltran Pozo 07/05/21
+ * @author Alan Beltran
+ * @version 2.0 7 May 2021
  */
 public class RVisualize extends JPanel {
 

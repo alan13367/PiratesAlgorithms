@@ -6,7 +6,8 @@ import java.util.Scanner;
 
 /**
  * Class implementing the Table data structure
- * Created by Ramon Sabater and Alvaro Delgado 15/03/21
+ * @author Ramon Sabater and Alvaro Delgado
+ * @version 2.0 15 May 2021
  */
 public class Table {
     private static final String basePath = "Tables/";

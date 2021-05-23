@@ -4,7 +4,8 @@ import java.util.Queue;
 
 /**
  * Class to implement Binary Tree Search by Exact Value and Range
- * Created by Alvaro Delgado Perez 23/03/21
+ * @author  Alvaro Delgado
+ * @version 2.0 23 March 2021
  */
 public class Search {
     /**

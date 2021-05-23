@@ -1,6 +1,7 @@
 /**
  * Class for the graphs Node Implementation
- * Created by Ramon Sabater 15/02/21
+ * @author Ramon Sabater and Alvaro Delgado
+ * @version 2.0 13 February 2021
  */
 public class Node {
 

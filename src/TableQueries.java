@@ -10,7 +10,8 @@ import java.awt.*;
 
 /**
  * Class for the Queries of the tables and showing the Histogram
- * Created by Alan Beltran Pozo 17/05/21
+ * @author Alan Beltran Pozo
+ * @version 2.0 17 May 2021
  */
 public class TableQueries {
 

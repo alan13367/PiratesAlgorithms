@@ -4,7 +4,8 @@ import java.util.Scanner;
 
 /**
  * Class for Reading and Creation of the R-Tree data structure
- * Created by Alvaro Delgado and Ramon Sabater 25/04/21
+ * @author Alvaro Delgado and Ramon Sabater
+ * @version 2.0 25 April 2021
  */
 public class RTreeReader {
     private static final String basepath = "RTrees/";
