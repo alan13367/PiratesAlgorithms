@@ -1,5 +1,9 @@
 import java.util.LinkedList;
-
+/**
+ * bfs algorithm applied to searching a specific node.
+ *
+ * @version 2.0 23 May 2021
+ */
 public class BFS {
 
     /**

@@ -1,5 +1,9 @@
 import java.math.BigInteger;
-
+/**
+ * Binary tree, works with references using BTNode as the root node.
+ *
+ * @version 2.0 23 May 2021
+ */
 public class BTNode {
 
     private String name;
