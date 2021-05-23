@@ -1,7 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Class to implement the Minimum Spanning Tree algorithm to the Graphs data structure
+ * Created by Alan Beltran Pozo 08/03/21
+ */
 public class MST {
 
     private int[] fathers;

@@ -8,6 +8,10 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import java.awt.*;
 
+/**
+ * Class for the Queries of the tables and showing the Histogram
+ * Created by Alan Beltran Pozo 17/05/21
+ */
 public class TableQueries {
 
     private int[] ages;

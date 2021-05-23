@@ -5,6 +5,10 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+/**
+ * Class for the reading and loading of the R-Tree data structure for it to be visualized
+ * Created by Alan Beltran Pozo 07/05/21
+ */
 public class RVisualize extends JPanel {
 
     private Rect rect;

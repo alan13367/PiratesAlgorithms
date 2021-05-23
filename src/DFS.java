@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that implements Depth-First Search for the Graphs data structure
+ * Created by Alan Beltran Pozo 03/03/21
+ */
+
 public class DFS {
     /**
      * The function from a starting node does a DFS for the interest points in the graph.

@@ -1,5 +1,9 @@
 import javax.swing.*;
 
+/**
+ * Class to visualize the frame of the R-Tree data structure
+ * Created by Alan Beltran Pozo 07/05/21
+ */
 public class MyFrame extends JFrame {
 
 

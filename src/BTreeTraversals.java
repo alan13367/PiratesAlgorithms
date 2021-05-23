@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * Class for the implementation of the Traversals of the Binary Tree Data Structure
+ * Created by Alan Beltran Pozo 18/03/21
+ */
 public class BTreeTraversals {
 
     /**
